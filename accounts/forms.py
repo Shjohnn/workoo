@@ -8,8 +8,11 @@ class RegisterForm(UserCreationForm):
     first_name = forms.CharField(max_length=50, required=True, label="Ismi")
     last_name = forms.CharField(max_length=50, required=True, label="Familiyasi")
     email = forms.EmailField(required=False, label="Email (ixtiyoriy)")
-    role = forms.ChoiceField(choices=ROLES, label="Siz kim sifatida kirasiz?")
-    region = forms.ChoiceField(choices=[('', '-- Viloyatni tanlang --')] + list(REGIONS), label="Viloyat")
+    region = forms.ChoiceField(
+        choices=[('', '-- Viloyatni tanlang --')] + list(REGIONS),
+        label="Viloyat",
+        required=False,
+    )
     phone = forms.CharField(max_length=20, required=False, label="Telefon raqam (ixtiyoriy)")
 
     class Meta:
@@ -19,7 +22,7 @@ class RegisterForm(UserCreationForm):
             'username': 'Foydalanuvchi nomi',
         }
 
-    def save(self, commit=True):
+    def save(self, commit=True, role='worker'):
         user = super().save(commit=False)
         user.first_name = self.cleaned_data['first_name']
         user.last_name = self.cleaned_data['last_name']
@@ -28,7 +31,7 @@ class RegisterForm(UserCreationForm):
             user.save()
             UserProfile.objects.create(
                 user=user,
-                role=self.cleaned_data['role'],
+                role=role,
                 region=self.cleaned_data.get('region', ''),
                 phone=self.cleaned_data.get('phone', ''),
             )

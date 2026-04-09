@@ -14,7 +14,10 @@ def register_view(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            user = form.save()
+            role = request.POST.get('role', 'worker')
+            if role not in ('worker', 'employer'):
+                role = 'worker'
+            user = form.save(role=role)
             login(request, user)
             messages.success(request, f"Xush kelibsiz, {user.first_name}! Hisobingiz muvaffaqiyatli yaratildi.")
             return redirect('home')

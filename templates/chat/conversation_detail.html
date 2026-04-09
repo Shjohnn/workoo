@@ -41,7 +41,12 @@
     const pollUrl = "{% url 'get_messages' conversation.pk %}";
     const csrfToken = document.cookie.match(/csrftoken=([^;]+)/)?.[1] || '';
 
-    let lastMsgId = {% if chat_messages %}{ { chat_messages.last.pk |default: 0 } } {% else %} 0{% endif %};
+    // Get last message ID from rendered bubbles
+    let lastMsgId = 0;
+    document.querySelectorAll('[data-id]').forEach(el => {
+        const id = parseInt(el.dataset.id);
+        if (id > lastMsgId) lastMsgId = id;
+    });
 
     function scrollBottom() {
         const el = document.getElementById('chatMessages');
@@ -49,9 +54,16 @@
     }
     scrollBottom();
 
+    function removeChatEmpty() {
+        const empty = document.querySelector('.chat-empty');
+        if (empty) empty.remove();
+    }
+
     function appendBubble(msg) {
+        removeChatEmpty();
         const div = document.createElement('div');
-        div.className = 'chat-bubble ' + (msg.is_own ? 'bubble-own' : 'bubble-other');
+        const isOwn = msg.sender_id === currentUserId;
+        div.className = 'chat-bubble ' + (isOwn ? 'bubble-own' : 'bubble-other');
         div.dataset.id = msg.id;
         div.innerHTML = `<p>${msg.body}</p><span class="bubble-time">${msg.timestamp}</span>`;
         document.getElementById('chatMessages').appendChild(div);
@@ -77,18 +89,21 @@
         });
     });
 
-    // Poll for new messages every 3 seconds
+    // Poll for new messages every 2.5 seconds
     setInterval(function () {
         fetch(`${pollUrl}?after=${lastMsgId}`)
             .then(r => r.json())
             .then(data => {
-                data.messages.forEach(msg => {
-                    if (!document.querySelector(`[data-id="${msg.id}"]`)) {
-                        appendBubble(msg);
-                        lastMsgId = msg.id;
-                    }
-                });
-            });
-    }, 3000);
+                if (data.messages) {
+                    data.messages.forEach(msg => {
+                        if (!document.querySelector(`[data-id="${msg.id}"]`)) {
+                            appendBubble(msg);
+                            lastMsgId = msg.id;
+                        }
+                    });
+                }
+            })
+            .catch(() => {}); // ignore network errors silently
+    }, 2500);
 </script>
 {% endblock %}

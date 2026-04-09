@@ -47,21 +47,41 @@
                 </div>
             </div>
 
-            <!-- Address with geocoding -->
+            <!-- Map location picker -->
             <div class="form-group">
-                <label>{{ form.address.label }}</label>
-                <div class="address-row">
-                    {{ form.address }}
-                    <button type="button" class="btn btn-outline" id="geocodeBtn">📍 Kartada ko'rsatish</button>
-                </div>
-                {{ form.lat }}
-                {{ form.lng }}
-            </div>
+                <label>📍 Joylashuv (xaritadan tanlang)</label>
+                <div class="map-picker-wrapper">
+                    <!-- Compact map preview -->
+                    <div id="mapPickerPreview" class="map-picker-preview" title="Kattalashtirish uchun bosing">
+                        <div id="mapPickerSmall" style="width:100%;height:100%;"></div>
+                        <div class="map-expand-hint">🔍 Kattalashtirish</div>
+                    </div>
 
-            <!-- Map preview -->
-            <div id="create-map-wrapper" style="display:none; margin:1rem 0;">
-                <div id="create-map" style="height:280px; border-radius:16px;"></div>
-                <small class="text-muted">Markerning aniq joyini o'zgartirish uchun uni suring</small>
+                    <!-- Address display -->
+                    <div class="map-address-result" id="addressResult" style="display:none;">
+                        <span class="map-pin-icon">📍</span>
+                        <span id="addressText"></span>
+                        <button type="button" class="btn-clear-pin" id="clearPin" title="Tozalash">✕</button>
+                    </div>
+                    <p class="map-hint-text">Xaritaga bosib joylashuvni belgilang yoki o'z joylashuvingizni aniqlang</p>
+
+                    <!-- Hidden inputs -->
+                    {{ form.lat }}
+                    {{ form.lng }}
+                    <input type="hidden" name="address_auto" id="addressAuto">
+
+                    <div class="map-picker-actions">
+                        <button type="button" class="btn btn-outline btn-sm" id="myLocationBtn">
+                            🎯 Mening joylashuvim
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Address manual field (hidden if pin set) -->
+                <div class="form-group" id="addressManualGroup" style="margin-top:.75rem;">
+                    <label>{{ form.address.label }}</label>
+                    {{ form.address }}
+                </div>
             </div>
 
             <div class="form-group">
@@ -77,46 +97,194 @@
                 <button type="submit" class="btn btn-primary btn-lg">
                     {% if edit %}Saqlash{% else %}E'lon qilish{% endif %}
                 </button>
-                <a href="{% if edit %}{% url 'job_detail' job.pk %}{% else %}{% url 'my_jobs' %}{% endif %}"
+                <a href="{% if edit %}{% url 'job_detail' job.pk %}{% else %}{% url 'job_list' %}{% endif %}"
                     class="btn btn-ghost">Bekor qilish</a>
             </div>
         </form>
     </div>
 </div>
+
+<!-- Fullscreen map modal -->
+<div id="mapModal" class="map-modal" style="display:none;">
+    <div class="map-modal-header">
+        <button type="button" class="btn btn-ghost btn-sm" id="closeMapModal">← Orqaga</button>
+        <span class="map-modal-title">📍 Joylashuvni tanlang</span>
+        <button type="button" class="btn btn-primary btn-sm" id="confirmPin">✓ Tasdiqlash</button>
+    </div>
+    <div id="mapPickerFull" style="width:100%;height:calc(100vh - 60px);"></div>
+    <div class="map-modal-hint" id="fullMapHint">Joylashuvni bosib yoki sudrab belgilang</div>
+</div>
 {% endblock %}
+
 {% block extra_js %}
 <script>
-    let createMap = null;
-    let createMarker = null;
+    // =====================
+    // State
+    // =====================
+    let smallMap = null, fullMap = null;
+    let smallMarker = null, fullMarker = null;
+    let pinnedLat = null, pinnedLng = null;
 
-    document.getElementById('geocodeBtn').addEventListener('click', function () {
-        const address = document.querySelector('[name="address"]').value;
-        if (!address) { alert("Avval manzilni kiriting"); return; }
+    // Pre-existing values (for edit mode)
+    {% if edit and job.lat and job.lng %}
+    pinnedLat = {{ job.lat }};
+    pinnedLng = {{ job.lng }};
+    {% endif %}
 
-        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address + ', O\'zbekiston')}`)
+    const defaultCenter = [41.2995, 69.2401]; // Toshkent
+    const defaultZoom = 11;
+
+    // =====================
+    // Init small map
+    // =====================
+    function initSmallMap() {
+        smallMap = L.map('mapPickerSmall', { zoomControl: true, attributionControl: false }).setView(defaultCenter, defaultZoom);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(smallMap);
+
+        if (pinnedLat) {
+            placeSmallMarker(pinnedLat, pinnedLng);
+            smallMap.setView([pinnedLat, pinnedLng], 15);
+            fetchAddress(pinnedLat, pinnedLng, false);
+        }
+
+        smallMap.on('click', function (e) {
+            openFullMap(e.latlng.lat, e.latlng.lng);
+        });
+    }
+
+    // =====================
+    // Small map marker
+    // =====================
+    function placeSmallMarker(lat, lng) {
+        if (smallMarker) smallMap.removeLayer(smallMarker);
+        smallMarker = L.marker([lat, lng]).addTo(smallMap);
+    }
+
+    // =====================
+    // Full map modal
+    // =====================
+    function openFullMap(lat, lng) {
+        document.getElementById('mapModal').style.display = 'flex';
+
+        if (!fullMap) {
+            fullMap = L.map('mapPickerFull', { attributionControl: false }).setView(
+                lat ? [lat, lng] : (pinnedLat ? [pinnedLat, pinnedLng] : defaultCenter),
+                lat ? 15 : defaultZoom
+            );
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(fullMap);
+
+            fullMap.on('click', function (e) {
+                placeFull(e.latlng.lat, e.latlng.lng);
+            });
+        } else {
+            setTimeout(() => fullMap.invalidateSize(), 100);
+            if (lat) fullMap.setView([lat, lng], 15);
+        }
+
+        if (lat) placeFull(lat, lng);
+        else if (pinnedLat) placeFull(pinnedLat, pinnedLng);
+
+        setTimeout(() => fullMap.invalidateSize(), 150);
+    }
+
+    function placeFull(lat, lng) {
+        if (fullMarker) fullMap.removeLayer(fullMarker);
+        fullMarker = L.marker([lat, lng], { draggable: true }).addTo(fullMap);
+        fullMarker.on('dragend', function (e) {
+            const pos = e.target.getLatLng();
+            placeFull(pos.lat, pos.lng);
+        });
+        document.getElementById('fullMapHint').textContent = '📍 ' + lat.toFixed(5) + ', ' + lng.toFixed(5);
+    }
+
+    document.getElementById('closeMapModal').addEventListener('click', function () {
+        document.getElementById('mapModal').style.display = 'none';
+    });
+
+    document.getElementById('confirmPin').addEventListener('click', function () {
+        if (!fullMarker) return;
+        const pos = fullMarker.getLatLng();
+        pinnedLat = pos.lat;
+        pinnedLng = pos.lng;
+
+        // Update hidden inputs
+        document.querySelector('[name="lat"]').value = pinnedLat;
+        document.querySelector('[name="lng"]').value = pinnedLng;
+
+        // Update small map
+        placeSmallMarker(pinnedLat, pinnedLng);
+        smallMap.setView([pinnedLat, pinnedLng], 15);
+
+        // Reverse geocode
+        fetchAddress(pinnedLat, pinnedLng, true);
+
+        document.getElementById('mapModal').style.display = 'none';
+    });
+
+    // Expand hint click
+    document.getElementById('mapPickerPreview').addEventListener('click', function (e) {
+        if (e.target.closest('#clearPin')) return;
+        openFullMap(pinnedLat, pinnedLng);
+    });
+
+    // =====================
+    // My location
+    // =====================
+    document.getElementById('myLocationBtn').addEventListener('click', function () {
+        if (!navigator.geolocation) { alert("Geolokatsiya qo'llab-quvvatlanmaydi"); return; }
+        this.textContent = '⏳ Aniqlanmoqda...';
+        const btn = this;
+        navigator.geolocation.getCurrentPosition(function (pos) {
+            btn.textContent = '🎯 Mening joylashuvim';
+            openFullMap(pos.coords.latitude, pos.coords.longitude);
+        }, function () {
+            btn.textContent = '🎯 Mening joylashuvim';
+            alert("Joylashuv aniqlanmadi. Brauzerdagi ruxsatni tekshiring.");
+        });
+    });
+
+    // =====================
+    // Reverse geocode
+    // =====================
+    function fetchAddress(lat, lng, updateField) {
+        fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&accept-language=uz`)
             .then(r => r.json())
             .then(data => {
-                if (data.length === 0) { alert("Manzil topilmadi. Aniqroq manzil kiriting."); return; }
-                const lat = parseFloat(data[0].lat);
-                const lng = parseFloat(data[0].lon);
-                document.querySelector('[name="lat"]').value = lat;
-                document.querySelector('[name="lng"]').value = lng;
+                const addr = data.display_name || (lat.toFixed(4) + ', ' + lng.toFixed(4));
+                document.getElementById('addressText').textContent = addr;
+                document.getElementById('addressResult').style.display = 'flex';
 
-                document.getElementById('create-map-wrapper').style.display = 'block';
-                if (!createMap) {
-                    createMap = L.map('create-map').setView([lat, lng], 15);
-                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap' }).addTo(createMap);
-                    createMarker = L.marker([lat, lng], { draggable: true }).addTo(createMap);
-                    createMarker.on('dragend', function (e) {
-                        const pos = e.target.getLatLng();
-                        document.querySelector('[name="lat"]').value = pos.lat.toFixed(6);
-                        document.querySelector('[name="lng"]').value = pos.lng.toFixed(6);
-                    });
-                } else {
-                    createMap.setView([lat, lng], 15);
-                    createMarker.setLatLng([lat, lng]);
+                if (updateField) {
+                    // Auto-fill address field
+                    const addrInput = document.querySelector('[name="address"]');
+                    if (addrInput && !addrInput.value) {
+                        addrInput.value = addr;
+                    }
+                    document.getElementById('addressAuto').value = addr;
                 }
+            })
+            .catch(() => {
+                document.getElementById('addressText').textContent = lat.toFixed(5) + ', ' + lng.toFixed(5);
+                document.getElementById('addressResult').style.display = 'flex';
             });
+    }
+
+    // =====================
+    // Clear pin
+    // =====================
+    document.getElementById('clearPin').addEventListener('click', function (e) {
+        e.stopPropagation();
+        pinnedLat = null; pinnedLng = null;
+        document.querySelector('[name="lat"]').value = '';
+        document.querySelector('[name="lng"]').value = '';
+        if (smallMarker) { smallMap.removeLayer(smallMarker); smallMarker = null; }
+        if (fullMarker) { fullMap && fullMap.removeLayer(fullMarker); fullMarker = null; }
+        document.getElementById('addressResult').style.display = 'none';
+        document.getElementById('addressText').textContent = '';
+        smallMap.setView(defaultCenter, defaultZoom);
     });
+
+    // Init on load
+    initSmallMap();
 </script>
 {% endblock %}

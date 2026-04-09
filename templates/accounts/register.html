@@ -26,21 +26,27 @@
                 <div class="form-group">
                     <label>{{ form.first_name.label }}</label>
                     {{ form.first_name }}
-                    {% if form.first_name.errors %}<span class="form-error">{{ form.first_name.errors.0 }}</span>{%
-                    endif %}
+                    {% if form.first_name.errors %}
+                    <span class="form-error">{{ form.first_name.errors.0 }}</span>
+                    {% endif %}
                 </div>
                 <div class="form-group">
                     <label>{{ form.last_name.label }}</label>
                     {{ form.last_name }}
-                    {% if form.last_name.errors %}<span class="form-error">{{ form.last_name.errors.0 }}</span>{% endif
-                    %}
+                    {% if form.last_name.errors %}
+                    <span class="form-error">{{ form.last_name.errors.0 }}</span>
+                    {% endif %}
                 </div>
             </div>
+
             <div class="form-group">
                 <label>{{ form.username.label }}</label>
                 {{ form.username }}
-                {% if form.username.errors %}<span class="form-error">{{ form.username.errors.0 }}</span>{% endif %}
+                {% if form.username.errors %}
+                <span class="form-error">{{ form.username.errors.0 }}</span>
+                {% endif %}
             </div>
+
             <div class="form-grid-2">
                 <div class="form-group">
                     <label>{{ form.region.label }}</label>
@@ -51,20 +57,32 @@
                     {{ form.phone }}
                 </div>
             </div>
+
             <div class="form-grid-2">
                 <div class="form-group">
                     <label>{{ form.password1.label }}</label>
                     {{ form.password1 }}
-                    {% if form.password1.errors %}<span class="form-error">{{ form.password1.errors.0 }}</span>{% endif
-                    %}
+                    {% if form.password1.errors %}
+                    <span class="form-error">{{ form.password1.errors.0 }}</span>
+                    {% endif %}
                 </div>
                 <div class="form-group">
                     <label>{{ form.password2.label }}</label>
                     {{ form.password2 }}
-                    {% if form.password2.errors %}<span class="form-error">{{ form.password2.errors.0 }}</span>{% endif
-                    %}
+                    {% if form.password2.errors %}
+                    <span class="form-error">{{ form.password2.errors.0 }}</span>
+                    {% endif %}
                 </div>
             </div>
+
+            {% if form.non_field_errors %}
+            <div class="form-error-box">
+                {% for error in form.non_field_errors %}
+                <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+
             <button type="submit" class="btn btn-primary btn-block btn-lg">Ro'yxatdan o'tish</button>
         </form>
         <p class="auth-switch">Hisobingiz bormi? <a href="{% url 'login' %}">Kirish</a></p>

@@ -175,11 +175,11 @@
 {% block extra_js %}
 {% if job.lat and job.lng %}
 <script>
-    const jobMap = L.map('job-map').setView([{{ job.lat }}, { { job.lng } }], 15);
+    const jobMap = L.map('job-map').setView([{{ job.lat }}, {{ job.lng }}], 15);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap'
     }).addTo(jobMap);
-    const marker = L.marker([{{ job.lat }}, { { job.lng } }]).addTo(jobMap);
+    const marker = L.marker([{{ job.lat }}, {{ job.lng }}]).addTo(jobMap);
     marker.bindPopup('<strong>{{ job.title|escapejs }}</strong><br>{{ job.address|escapejs }}').openPopup();
 </script>
 {% endif %}
