@@ -1,26 +1,32 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.translation import gettext_lazy as _
 
 REGIONS = [
-    ('toshkent_shahar', "Toshkent shahri"),
-    ('toshkent_viloyat', "Toshkent viloyati"),
-    ('andijon', "Andijon viloyati"),
-    ('fargona', "Farg'ona viloyati"),
-    ('namangan', "Namangan viloyati"),
-    ('samarqand', "Samarqand viloyati"),
-    ('buxoro', "Buxoro viloyati"),
-    ('qashqadaryo', "Qashqadaryo viloyati"),
-    ('surxondaryo', "Surxondaryo viloyati"),
-    ('jizzax', "Jizzax viloyati"),
-    ('sirdaryo', "Sirdaryo viloyati"),
-    ('navoiy', "Navoiy viloyati"),
-    ('xorazm', "Xorazm viloyati"),
-    ('qoraqalpogiston', "Qoraqalpog'iston Respublikasi"),
+    ('toshkent_shahar', _('Tashkent city')),
+    ('toshkent_viloyat', _('Tashkent region')),
+    ('andijon', _('Andijan region')),
+    ('fargona', _('Fergana region')),
+    ('namangan', _('Namangan region')),
+    ('samarqand', _('Samarkand region')),
+    ('buxoro', _('Bukhara region')),
+    ('qashqadaryo', _('Kashkadarya region')),
+    ('surxondaryo', _('Surkhandarya region')),
+    ('jizzax', _('Jizzakh region')),
+    ('sirdaryo', _('Syrdarya region')),
+    ('navoiy', _('Navoi region')),
+    ('xorazm', _('Khorezm region')),
+    ('qoraqalpogiston', _('Republic of Karakalpakstan')),
 ]
 
 ROLES = [
-    ('worker', 'Ishchi'),
-    ('employer', 'Ish beruvchi'),
+    ('worker', _('Worker')),
+    ('employer', _('Employer')),
+]
+
+THEME_CHOICES = [
+    ('light', _('Light')),
+    ('dark', _('Dark')),
 ]
 
 
@@ -31,6 +37,11 @@ class UserProfile(models.Model):
     region = models.CharField(max_length=50, choices=REGIONS, blank=True)
     bio = models.TextField(blank=True, max_length=500)
     phone = models.CharField(max_length=20, blank=True)
+    theme_preference = models.CharField(
+        max_length=16,
+        choices=THEME_CHOICES,
+        default='light',
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

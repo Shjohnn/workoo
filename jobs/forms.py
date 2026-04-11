@@ -1,4 +1,6 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
+
 from .models import Job, JobApplication, JOB_CATEGORIES
 from accounts.models import REGIONS
 
@@ -10,19 +12,19 @@ class JobForm(forms.ModelForm):
                   'region', 'address', 'lat', 'lng', 'image', 'workers_needed',
                   'work_date', 'status']
         labels = {
-            'title': 'Ish nomi',
-            'description': 'Ish tavsifi',
-            'category': 'Kategoriya',
-            'salary': 'To\'lov miqdori (so\'mda)',
-            'salary_type': 'To\'lov turi',
-            'region': 'Viloyat',
-            'address': 'Manzil',
+            'title': _('Job title'),
+            'description': _('Job description'),
+            'category': _('Category'),
+            'salary': _('Payment amount (UZS)'),
+            'salary_type': _('Payment type'),
+            'region': _('Region'),
+            'address': _('Address'),
             'lat': '',
             'lng': '',
-            'image': 'Rasm (ixtiyoriy)',
-            'workers_needed': 'Nechta ishchi kerak',
-            'work_date': 'Ish sanasi',
-            'status': 'Holat',
+            'image': _('Image (optional)'),
+            'workers_needed': _('Workers needed'),
+            'work_date': _('Work date'),
+            'status': _('Status'),
         }
         widgets = {
             'lat': forms.HiddenInput(),
@@ -36,7 +38,10 @@ class JobApplicationForm(forms.ModelForm):
     class Meta:
         model = JobApplication
         fields = ['message']
-        labels = {'message': 'Qo\'shimcha xabar (ixtiyoriy)'}
+        labels = {'message': _('Additional message (optional)')}
         widgets = {
-            'message': forms.Textarea(attrs={'rows': 3, 'placeholder': 'O\'zingiz haqingizda qisqacha yozing...'})
+            'message': forms.Textarea(attrs={
+                'rows': 3,
+                'placeholder': _('Briefly describe yourself...'),
+            })
         }

@@ -1,16 +1,17 @@
 {% extends 'base.html' %}
-{% block title %}{% if edit %}Tahrirlash{% else %}Ish e'lon qilish{% endif %} — IshTop{% endblock %}
+{% load i18n %}
+{% block title %}{% if edit %}{% trans 'Edit' %}{% else %}{% trans 'Post a job' %}{% endif %} — Workooo{% endblock %}
 {% block content %}
 <div class="container form-page">
     <div class="form-card">
-        <h2>{% if edit %}✏️ E'lonni tahrirlash{% else %}📢 Yangi ish e'lon qilish{% endif %}</h2>
+        <h2>{% if edit %}✏️ {% trans 'Edit listing' %}{% else %}📢 {% trans 'Post a new job' %}{% endif %}</h2>
 
         <form method="post" enctype="multipart/form-data" id="jobForm">
             {% csrf_token %}
 
             <!-- Section 1: Asosiy ma'lumotlar -->
             <div class="form-section">
-                <div class="form-section-title">📝 Asosiy ma'lumotlar</div>
+                <div class="form-section-title">📝 {% trans 'Basic information' %}</div>
                 <div class="form-grid-2">
                     <div class="form-group">
                         <label>{{ form.title.label }}</label>
@@ -30,7 +31,7 @@
 
             <!-- Section 2: To'lov va muddat -->
             <div class="form-section">
-                <div class="form-section-title">💰 To'lov va muddat</div>
+                <div class="form-section-title">💰 {% trans 'Payment and schedule' %}</div>
                 <div class="form-grid-3">
                     <div class="form-group">
                         <label>{{ form.salary.label }}</label>
@@ -59,21 +60,21 @@
 
             <!-- Section 3: Joylashuv -->
             <div class="form-section">
-                <div class="form-section-title">📍 Joylashuv</div>
+                <div class="form-section-title">📍 {% trans 'Location' %}</div>
 
                 <!-- Small map preview (always visible) -->
                 <div class="map-picker-wrapper">
-                    <div id="mapPickerPreview" class="map-picker-preview" title="Kattalashtirish uchun bosing">
+                    <div id="mapPickerPreview" class="map-picker-preview" title="{% trans 'Click to enlarge' %}">
                         <div id="mapPickerSmall" style="width:100%;height:100%;"></div>
-                        <div class="map-expand-hint">🔍 To'liq ekran</div>
+                        <div class="map-expand-hint">🔍 {% trans 'Fullscreen' %}</div>
                     </div>
 
                     <div class="map-address-result" id="addressResult" style="display:none;">
                         <span class="map-pin-icon">📍</span>
                         <span id="addressText"></span>
-                        <button type="button" class="btn-clear-pin" id="clearPin" title="Tozalash">✕</button>
+                        <button type="button" class="btn-clear-pin" id="clearPin" title="{% trans 'Clear' %}">✕</button>
                     </div>
-                    <p class="map-hint-text">Xaritani bosib joylashuvni tanlang yoki GPS dan foydalaning</p>
+                    <p class="map-hint-text">{% trans 'Click the map to set location or use GPS.' %}</p>
 
                     <!-- Hidden coordinate inputs -->
                     {{ form.lat }}
@@ -81,7 +82,7 @@
 
                     <div class="map-picker-actions">
                         <button type="button" class="btn btn-outline btn-sm" id="myLocationBtn">
-                            🎯 Mening joylashuvim
+                            🎯 {% trans 'My location' %}
                         </button>
                     </div>
                 </div>
@@ -96,7 +97,7 @@
 
             <!-- Section 4: Rasm va holat -->
             <div class="form-section">
-                <div class="form-section-title">🖼️ Qo'shimcha</div>
+                <div class="form-section-title">🖼️ {% trans 'Extras' %}</div>
                 <div class="form-grid-2">
                     <div class="form-group">
                         <label>{{ form.image.label }}</label>
@@ -111,10 +112,10 @@
 
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary btn-lg">
-                    {% if edit %}💾 Saqlash{% else %}🚀 E'lon qilish{% endif %}
+                    {% if edit %}💾 {% trans 'Save' %}{% else %}🚀 {% trans 'Publish' %}{% endif %}
                 </button>
                 <a href="{% if edit %}{% url 'job_detail' job.pk %}{% else %}{% url 'job_list' %}{% endif %}"
-                    class="btn btn-ghost btn-lg">Bekor qilish</a>
+                    class="btn btn-ghost btn-lg">{% trans 'Cancel' %}</a>
             </div>
         </form>
     </div>
@@ -123,16 +124,25 @@
 <!-- Fullscreen map modal -->
 <div id="mapModal" class="map-modal" style="display:none;">
     <div class="map-modal-header">
-        <button type="button" class="btn btn-ghost btn-sm" id="closeMapModal">← Orqaga</button>
-        <span class="map-modal-title">📍 Joylashuvni tanlang</span>
-        <button type="button" class="btn btn-primary btn-sm" id="confirmPin">✓ Tasdiqlash</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="closeMapModal">← {% trans 'Back' %}</button>
+        <span class="map-modal-title">📍 {% trans 'Choose location' %}</span>
+        <button type="button" class="btn btn-primary btn-sm" id="confirmPin">✓ {% trans 'Confirm' %}</button>
     </div>
     <div id="mapPickerFull" style="width:100%;height:calc(100vh - 60px);"></div>
-    <div class="map-modal-hint" id="fullMapHint">Xaritadan joy bosing yoki belgi sudrang</div>
+    <div class="map-modal-hint" id="fullMapHint">{% trans 'Tap the map or drag the marker' %}</div>
 </div>
 {% endblock %}
 
 {% block extra_js %}
+<script>
+window.ISHTOP_MAP = {
+    pickLocation: "{% filter escapejs %}{% trans 'Pick a location on the map' %}{% endfilter %}",
+    geoUnsupported: "{% filter escapejs %}{% trans 'Geolocation is not supported' %}{% endfilter %}",
+    locating: "{% filter escapejs %}{% trans 'Locating…' %}{% endfilter %}",
+    geoError: "{% filter escapejs %}{% trans 'Could not get location. Check browser permissions.' %}{% endfilter %}",
+    myLocation: "{% filter escapejs %}{% trans 'My location' %}{% endfilter %}",
+};
+</script>
 <script>
 // =====================
 // State
@@ -234,11 +244,11 @@ document.getElementById('mapPickerPreview').addEventListener('click', function(e
 // =====================
 // Confirm pin in fullscreen
 // =====================
-document.getElementById('confirmPin').addEventListener('click', function() {
-    if (!fullMarker) {
-        alert('Xaritadan joy tanlang');
-        return;
-    }
+    document.getElementById('confirmPin').addEventListener('click', function() {
+        if (!fullMarker) {
+            alert(window.ISHTOP_MAP.pickLocation);
+            return;
+        }
     const pos = fullMarker.getLatLng();
     pinnedLat = pos.lat;
     pinnedLng = pos.lng;
@@ -265,16 +275,16 @@ document.getElementById('closeMapModal').addEventListener('click', function() {
 // =====================
 document.getElementById('myLocationBtn').addEventListener('click', function() {
     if (!navigator.geolocation) {
-        alert("Geolokatsiya qo'llab-quvvatlanmaydi");
+        alert(window.ISHTOP_MAP.geoUnsupported);
         return;
     }
     const btn = this;
-    btn.textContent = '⏳ Aniqlanmoqda...';
+    btn.textContent = '⏳ ' + window.ISHTOP_MAP.locating;
     btn.disabled = true;
 
     navigator.geolocation.getCurrentPosition(
         function(pos) {
-            btn.textContent = '🎯 Mening joylashuvim';
+            btn.textContent = '🎯 ' + window.ISHTOP_MAP.myLocation;
             btn.disabled = false;
 
             const lat = pos.coords.latitude;
@@ -285,9 +295,9 @@ document.getElementById('myLocationBtn').addEventListener('click', function() {
             openFullMap(lat, lng);
         },
         function() {
-            btn.textContent = '🎯 Mening joylashuvim';
+            btn.textContent = '🎯 ' + window.ISHTOP_MAP.myLocation;
             btn.disabled = false;
-            alert("Joylashuv aniqlanmadi. Brauzer ruxsatini tekshiring.");
+            alert(window.ISHTOP_MAP.geoError);
         }
     );
 });
@@ -296,7 +306,7 @@ document.getElementById('myLocationBtn').addEventListener('click', function() {
 // Reverse geocode address
 // =====================
 function fetchAddress(lat, lng, fillField) {
-    fetch('https://nominatim.openstreetmap.org/reverse?format=json&lat=' + lat + '&lon=' + lng + '&accept-language=uz')
+    fetch('https://nominatim.openstreetmap.org/reverse?format=json&lat=' + lat + '&lon=' + lng + '&accept-language={{ LANGUAGE_CODE|default:"uz" }}')
         .then(r => r.json())
         .then(data => {
             const addr = data.display_name || (lat.toFixed(4) + ', ' + lng.toFixed(4));

@@ -1,14 +1,18 @@
 {% extends 'base.html' %}
-{% block title %}Chatlar — IshTop{% endblock %}
+{% load i18n %}
+{% block title %}{% trans 'Chats' %} — Workooo{% endblock %}
 {% block content %}
 <div class="container form-page">
-    <h2>💬 Chatlar</h2>
+    <h2>💬 {% trans 'Chats' %}</h2>
     {% if conversations %}
     <div class="conversation-list">
         {% for conv in conversations %}
-        {% with last=conv.last_message unread=conv.unread_count %}
-        <a href="{% url 'conversation_detail' conv.pk %}" class="conv-card {% if unread %}conv-unread{% endif %}">
+        {% with last=conv.last_message unread=conv.unread_for_user %}
+        <a href="{% url 'conversation_detail' conv.pk %}"
+           class="conv-card {% if unread %}conv-unread{% endif %}"
+           {% if unread %}aria-label="{% trans 'Unread messages' %} ({{ unread }})"{% endif %}>
             <div class="conv-other-avatar">
+                {% if unread %}<span class="conv-unread-dot" aria-hidden="true" title="{% trans 'Unread' %}"></span>{% endif %}
                 {% if user == conv.employer %}
                 {% if conv.worker.profile.avatar %}
                 <img src="{{ conv.worker.profile.avatar.url }}" alt="">
@@ -25,14 +29,14 @@
             </div>
             <div class="conv-info">
                 <div class="conv-top">
-                    <strong>
+                    <strong class="{% if unread %}conv-name-unread{% endif %}">
                         {% if user == conv.employer %}{{ conv.worker.get_full_name|default:conv.worker.username }}
                         {% else %}{{ conv.employer.get_full_name|default:conv.employer.username }}{% endif %}
                     </strong>
-                    {% if last %}<span class="conv-time">{{ last.timestamp|timesince }} oldin</span>{% endif %}
+                    {% if last %}<span class="conv-time">{{ last.timestamp|timesince }} {% trans 'ago' %}</span>{% endif %}
                 </div>
                 <p class="conv-job">{{ conv.job.title }}</p>
-                {% if last %}<p class="conv-preview">{{ last.body|truncatechars:60 }}</p>{% endif %}
+                {% if last %}<p class="conv-preview {% if unread %}conv-preview-unread{% endif %}">{{ last.body|truncatechars:60 }}</p>{% endif %}
             </div>
             {% if unread %}<span class="unread-badge">{{ unread }}</span>{% endif %}
         </a>
@@ -41,10 +45,10 @@
     </div>
     {% else %}
     <div class="empty-state">
-        <div class="empty-icon">💬</div>
-        <h3>Hali chat yo'q</h3>
-        <p>Ishga ariza topshiring va qabul qilinganda chat ochiladi.</p>
-        <a href="{% url 'job_list' %}" class="btn btn-primary">Ishlarni ko'rish</a>
+        <div class="empty-icon" aria-hidden="true">💬</div>
+        <h3>{% trans 'No chats yet' %}</h3>
+        <p>{% trans 'Apply to a job — when accepted, a chat will open.' %}</p>
+        <a href="{% url 'job_list' %}" class="btn btn-primary">{% trans 'Browse jobs' %}</a>
     </div>
     {% endif %}
 </div>

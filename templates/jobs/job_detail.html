@@ -1,20 +1,75 @@
 {% extends 'base.html' %}
-{% block title %}{{ job.title }} — IshTop{% endblock %}
+{% load i18n %}
+{% block title %}{{ job.title }} — Workooo{% endblock %}
+
 {% block extra_head %}
 {% if job.lat and job.lng %}
 <style>
-    #job-map {
-        height: 320px;
-        border-radius: 16px;
-        overflow: hidden;
-        margin: 1rem 0;
-    }
+.map-picker-wrapper {
+    margin-top: 1rem;
+}
+
+.map-picker-preview {
+    height: 280px;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    cursor: zoom-in;
+    transition: transform .3s ease;
+}
+
+.map-picker-preview:hover {
+    transform: scale(1.02);
+}
+
+#mapPickerSmall {
+    width: 100%;
+    height: 100%;
+}
+
+.map-expand-hint {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+}
+
+.map-top-info {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.map-badge {
+    background: rgba(0,0,0,0.65);
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+}
+
+.map-actions {
+    margin-top: .5rem;
+    display: flex;
+    gap: .5rem;
+    flex-wrap: wrap;
+}
 </style>
 {% endif %}
 {% endblock %}
+
 {% block content %}
 <div class="container detail-layout">
     <div class="detail-main">
+
         {% if job.image %}
         <div class="detail-hero-img">
             <img src="{{ job.image.url }}" alt="{{ job.title }}">
@@ -22,100 +77,108 @@
         {% endif %}
 
         <div class="detail-card">
+
             <div class="detail-header">
                 <span class="job-badge">{{ job.get_category_display }}</span>
                 <span class="job-status status-{{ job.status }}">{{ job.get_status_display }}</span>
             </div>
+
             <h1>{{ job.title }}</h1>
+
             <div class="detail-meta-row">
                 <span>📍 {{ job.address }}, {{ job.get_region_display }}</span>
                 {% if job.work_date %}<span>📅 {{ job.work_date }}</span>{% endif %}
-                <span>👥 {{ job.workers_needed }} ishchi</span>
-                <span>🕐 {{ job.created_at|timesince }} oldin</span>
+                <span>👥 {{ job.workers_needed }} {% trans 'workers' %}</span>
+                <span>🕐 {{ job.created_at|timesince }} {% trans 'ago' %}</span>
             </div>
 
             <div class="salary-block">
                 <div class="salary-amount">{{ job.get_salary_display_text }}</div>
             </div>
 
-            <h3>Ish haqida</h3>
+            <h3>{% trans 'About the job' %}</h3>
             <div class="job-description">{{ job.description|linebreaks }}</div>
 
             {% if job.lat and job.lng %}
-            <h3>📍 Joylashuv</h3>
-            <div id="job-map"></div>
+            <h3>📍 {% trans 'Location' %}</h3>
+
+            <div class="map-picker-wrapper">
+
+                <div id="mapPickerPreview" class="map-picker-preview">
+
+                    <div id="mapPickerSmall"></div>
+
+                    <div class="map-top-info">
+                        <div class="map-badge" id="addressBadge">📍 {% trans 'Loading…' %}</div>
+                        <div class="map-badge" id="distanceBadge" style="display:none;"></div>
+                    </div>
+
+                    <div class="map-expand-hint">🔍 {% trans 'Fullscreen' %}</div>
+                </div>
+
+                <div class="map-actions">
+                    <button type="button" class="btn btn-outline btn-sm" id="myLocationBtn">
+                        🎯 {% trans 'My location' %}
+                    </button>
+
+                    <a href="https://www.google.com/maps?q={{ job.lat }},{{ job.lng }}"
+                       target="_blank" rel="noopener noreferrer"
+                       class="btn btn-outline btn-sm">
+                        📍 {% trans 'Directions' %}
+                    </a>
+                </div>
+
+            </div>
             {% endif %}
+
         </div>
 
-        <!-- Employer managing applications -->
-        {% if applications is not None %}
-        <div class="detail-card">
-            <h3>Arizalar ({{ applications.count }})</h3>
+    </div>
+
+    <aside class="detail-sidebar">
+        {% if user.is_authenticated and user == job.employer and applications %}
+        <div class="sidebar-card">
+            <h4>{% trans 'Applications' %}</h4>
             {% for app in applications %}
             <div class="applicant-row">
-                <a href="{% url 'profile' app.worker.pk %}" class="applicant-info">
+                <div class="applicant-info">
                     {% if app.worker.profile.avatar %}
-                    <img src="{{ app.worker.profile.avatar.url }}" class="applicant-avatar" alt="">
+                    <img src="{{ app.worker.profile.avatar.url }}" alt="" class="applicant-avatar" width="38" height="38">
                     {% else %}
                     <div class="applicant-avatar-placeholder">{{ app.worker.first_name|first|upper }}</div>
                     {% endif %}
                     <div>
                         <strong>{{ app.worker.get_full_name|default:app.worker.username }}</strong>
-                        {% with avg=app.worker.profile.average_rating %}
-                        {% if avg %}<div class="mini-rating">⭐ {{ avg }}</div>{% endif %}
-                        {% endwith %}
-                        {% if app.message %}<p class="app-message">"{{ app.message }}"</p>{% endif %}
+                        <div class="application-status-block status-{{ app.status }}">{{ app.get_status_display }}</div>
+                        {% if app.message %}<p class="app-message">{{ app.message }}</p>{% endif %}
                     </div>
-                </a>
+                </div>
                 <div class="applicant-actions">
                     {% if app.status == 'kutilmoqda' %}
-                    <form method="post" action="{% url 'manage_application' app.pk %}" style="display:inline">
+                    <form method="post" action="{% url 'manage_application' app.pk %}" style="display:inline;">
                         {% csrf_token %}
                         <input type="hidden" name="action" value="accept">
-                        <button class="btn btn-success btn-sm">✓ Qabul</button>
+                        <button type="submit" class="btn btn-success btn-sm">{% trans 'Accept' %}</button>
                     </form>
-                    <form method="post" action="{% url 'manage_application' app.pk %}" style="display:inline">
+                    <form method="post" action="{% url 'manage_application' app.pk %}" style="display:inline;">
                         {% csrf_token %}
                         <input type="hidden" name="action" value="reject">
-                        <button class="btn btn-danger btn-sm">✗ Rad</button>
+                        <button type="submit" class="btn btn-danger btn-sm">{% trans 'Reject' %}</button>
                     </form>
                     {% elif app.status == 'qabul_qilindi' %}
-                    <span class="badge-accepted">Qabul qilindi</span>
-                    {% if job.status == 'tugallangan' %}
-                    <a href="{% url 'rate_worker' job.pk app.worker.pk %}" class="btn btn-outline btn-sm">⭐ Baholash</a>
-                    {% endif %}
-                    {% else %}
-                    <span class="badge-rejected">Rad etildi</span>
+                    <a href="{% url 'rate_worker' job.pk app.worker.pk %}" class="btn btn-outline btn-sm">⭐ {% trans 'Rate' %}</a>
                     {% endif %}
                 </div>
             </div>
-            {% empty %}
-            <p class="text-muted">Hali ariza yo'q.</p>
             {% endfor %}
-
-            {% if job.status == 'ochiq' %}
-            <form method="post" action="{% url 'complete_job' job.pk %}" style="margin-top:1rem">
-                {% csrf_token %}
-                <button class="btn btn-outline">✓ Ishni tugallandi deb belgilash</button>
-            </form>
-            {% endif %}
-
-            <div class="employer-manage-links">
-                <a href="{% url 'job_edit' job.pk %}" class="btn btn-ghost btn-sm">✏️ Tahrirlash</a>
-                <a href="{% url 'job_delete' job.pk %}" class="btn btn-danger btn-sm"
-                    onclick="return confirm('O\'chirilsinmi?')">🗑️ O'chirish</a>
-            </div>
         </div>
         {% endif %}
-    </div>
 
-    <div class="detail-sidebar">
-        <!-- Employer info -->
-        <div class="sidebar-card employer-card">
-            <h4>Ish beruvchi</h4>
+        <div class="sidebar-card">
+            <h4>{% trans 'Employer' %}</h4>
             <a href="{% url 'profile' job.employer.pk %}" class="employer-info">
                 {% if job.employer.profile.avatar %}
-                <img src="{{ job.employer.profile.avatar.url }}" class="employer-avatar" alt="">
+                <img src="{{ job.employer.profile.avatar.url }}" alt="" class="employer-avatar" width="48" height="48">
                 {% else %}
                 <div class="employer-avatar-placeholder">{{ job.employer.first_name|first|upper }}</div>
                 {% endif %}
@@ -126,82 +189,131 @@
             </a>
         </div>
 
-        <!-- Apply section -->
-        {% if user.is_authenticated %}
-        {% if user != job.employer and user.profile.role == 'worker' %}
-        {% if job.status == 'ochiq' %}
-        {% if user_application %}
+        {% if user.is_authenticated and user != job.employer and user.profile.role == 'worker' %}
         <div class="sidebar-card">
+            {% if user_application %}
             <div class="application-status-block status-{{ user_application.status }}">
-                {% if user_application.status == 'kutilmoqda' %}
-                ⏳ Arizangiz kutilmoqda...
-                {% elif user_application.status == 'qabul_qilindi' %}
-                ✅ Arizangiz qabul qilindi!
-                <a href="{% url 'conversation_list' %}" class="btn btn-primary btn-block" style="margin-top:.75rem">💬
-                    Chatga o'tish</a>
-                {% else %}
-                ❌ Ariza rad etildi
-                {% endif %}
+                {{ user_application.get_status_display }}
             </div>
-        </div>
-        {% else %}
-        <div class="sidebar-card">
-            <h4>Ishga murojaat</h4>
+            {% if user_application.status == 'qabul_qilindi' %}
+                {% if has_conversation %}
+                <a href="{% url 'conversation_list' %}" class="btn btn-primary btn-block" style="margin-top:.75rem">💬 {% trans 'Open chat' %}</a>
+                {% endif %}
+                <a href="{% url 'job_list' %}" class="btn btn-ghost btn-block" style="margin-top:.5rem">{% trans 'More jobs' %}</a>
+            {% endif %}
+            {% else %}
+            {% if job.status == 'ochiq' %}
             <form method="post" action="{% url 'apply_job' job.pk %}">
                 {% csrf_token %}
                 <div class="form-group">
-                    <textarea name="message" class="form-control" rows="3"
-                        placeholder="O'zingiz haqingizda qisqacha..."></textarea>
+                    <label for="app-msg">{{ form.message.label }}</label>
+                    {{ form.message }}
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">📩 Ariza yuborish</button>
+                <button type="submit" class="btn btn-primary btn-block">{% trans 'Apply' %}</button>
             </form>
+            {% endif %}
+            {% endif %}
         </div>
         {% endif %}
-        {% else %}
-        <div class="sidebar-card">
-            <p class="text-muted">Bu ish {{ job.get_status_display|lower }}.</p>
+
+        {% if user.is_authenticated and user == job.employer and job.status == 'ochiq' %}
+        <div class="employer-manage-links">
+            <a href="{% url 'job_edit' job.pk %}" class="btn btn-outline btn-sm">{% trans 'Edit' %}</a>
+            <a href="{% url 'job_delete' job.pk %}" class="btn btn-danger btn-sm">{% trans 'Delete' %}</a>
         </div>
         {% endif %}
-        {% endif %}
-        {% else %}
-        <div class="sidebar-card">
-            <p class="text-muted">Ariza topshirish uchun tizimga kiring.</p>
-            <a href="{% url 'login' %}" class="btn btn-primary btn-block">Kirish</a>
-        </div>
-        {% endif %}
-    </div>
+    </aside>
 </div>
 {% endblock %}
+
 {% block extra_js %}
 {% if job.lat and job.lng %}
 <script>
 (function() {
-    var mapEl = document.getElementById('job-map');
-    if (!mapEl) return;
-    var lat = {{ job.lat }};
-    var lng = {{ job.lng }};
-    var jobMap = L.map('job-map', {
+
+var lat = parseFloat("{{ job.lat|default:'0' }}");
+var lng = parseFloat("{{ job.lng|default:'0' }}");
+
+    var map = L.map('mapPickerSmall', {
         attributionControl: false,
         scrollWheelZoom: false,
         zoomControl: true
     }).setView([lat, lng], 15);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(jobMap);
-    var marker = L.marker([lat, lng]).addTo(jobMap);
-    marker.bindPopup('<strong>{{ job.title|escapejs }}</strong><br>{{ job.address|escapejs }}').openPopup();
-    // Click to fullscreen
-    mapEl.style.cursor = 'zoom-in';
-    mapEl.addEventListener('click', function(e) {
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
+        .addTo(map);
+
+    var marker = L.marker([lat, lng]).addTo(map);
+
+    marker.bindPopup(
+        "<strong>{{ job.title|escapejs }}</strong><br>{{ job.address|escapejs }}"
+    ).openPopup();
+
+    var preview = document.getElementById('mapPickerPreview');
+
+    preview.addEventListener('click', function(e) {
         if (e.target.closest('.leaflet-control')) return;
+
         if (document.fullscreenElement) {
             document.exitFullscreen();
         } else {
-            mapEl.requestFullscreen().catch(function(){});
+            preview.requestFullscreen().catch(function(){});
         }
     });
+
     document.addEventListener('fullscreenchange', function() {
-        setTimeout(function() { jobMap.invalidateSize(); }, 200);
+        setTimeout(function() {
+            map.invalidateSize();
+        }, 200);
     });
+
+    var lang = "{{ LANGUAGE_CODE|default:'en' }}";
+    fetch('https://nominatim.openstreetmap.org/reverse?format=json&lat=' + lat + '&lon=' + lng + '&accept-language=' + encodeURIComponent(lang))
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+            document.getElementById('addressBadge').innerText =
+                "📍 " + (data.display_name || "{% filter escapejs %}{% trans 'Address not found' %}{% endfilter %}");
+        });
+
+    function getDistance(lat1, lon1, lat2, lon2) {
+        var R = 6371;
+        var dLat = (lat2-lat1) * Math.PI/180;
+        var dLon = (lon2-lon1) * Math.PI/180;
+
+        var a =
+            Math.sin(dLat/2) * Math.sin(dLat/2) +
+            Math.cos(lat1 * Math.PI/180) * Math.cos(lat2 * Math.PI/180) *
+            Math.sin(dLon/2) * Math.sin(dLon/2);
+
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        return R * c;
+    }
+
+    var myBtn = document.getElementById('myLocationBtn');
+
+    myBtn.addEventListener('click', function() {
+        if (!navigator.geolocation) return;
+
+        navigator.geolocation.getCurrentPosition(function(pos) {
+            var userLat = pos.coords.latitude;
+            var userLng = pos.coords.longitude;
+
+            var dist = getDistance(userLat, userLng, lat, lng).toFixed(2);
+
+            var badge = document.getElementById('distanceBadge');
+            badge.style.display = 'inline-block';
+            badge.innerText = "📏 " + dist + " km";
+
+            L.marker([userLat, userLng])
+                .addTo(map)
+                .bindPopup("{% filter escapejs %}{% trans 'You are here' %}{% endfilter %}")
+                .openPopup();
+
+            map.setView([userLat, userLng], 13);
+        });
+    });
+
 })();
 </script>
 {% endif %}
-{% endblock %}
+{% endblock %}

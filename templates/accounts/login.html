@@ -1,26 +1,27 @@
 {% extends 'base.html' %}
-{% block title %}Kirish — IshTop{% endblock %}
+{% load i18n %}
+{% block title %}{% trans 'Log in' %} — Workooo{% endblock %}
 {% block content %}
 <div class="auth-page">
     <div class="auth-card">
-        <div class="auth-logo">💼 IshTop</div>
-        <h2>Tizimga kirish</h2>
+        <div class="auth-logo">💼 <span class="logo-text">Workooo</span></div>
+        <h2>{% trans 'Sign in' %}</h2>
         {% if error %}
         <div class="alert alert-error">{{ error }}</div>
         {% endif %}
         <form method="post">
             {% csrf_token %}
             <div class="form-group">
-                <label>Foydalanuvchi nomi</label>
-                <input type="text" name="username" class="form-control" autofocus required placeholder="username">
+                <label for="id_username">{% trans 'Username' %}</label>
+                <input type="text" name="username" id="id_username" class="form-control" autofocus required placeholder="{% trans 'Username' %}" autocomplete="username">
             </div>
             <div class="form-group">
-                <label>Parol</label>
-                <input type="password" name="password" class="form-control" required placeholder="••••••••">
+                <label for="id_password">{% trans 'Password' %}</label>
+                <input type="password" name="password" id="id_password" class="form-control" required placeholder="••••••••" autocomplete="current-password">
             </div>
-            <button type="submit" class="btn btn-primary btn-block btn-lg">Kirish</button>
+            <button type="submit" class="btn btn-primary btn-block btn-lg">{% trans 'Log in' %}</button>
         </form>
-        <p class="auth-switch">Hisobingiz yo'qmi? <a href="{% url 'register' %}">Ro'yxatdan o'ting</a></p>
+        <p class="auth-switch">{% trans 'No account?' %} <a href="{% url 'register' %}">{% trans 'Sign up' %}</a></p>
     </div>
 </div>
 {% endblock %}

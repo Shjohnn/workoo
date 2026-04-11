@@ -1,11 +1,29 @@
-{% load static %}
+{% load i18n static %}
+{% get_current_language as LANGUAGE_CODE %}
 <!DOCTYPE html>
-<html lang="uz">
+<html lang="{{ LANGUAGE_CODE }}" class="no-js">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="IshTop — O'zbekistonda kunlik va qisqa muddatli ish topish platformasi.">
-    <title>{% block title %}IshTop — Ish Toping!{% endblock %}</title>
+    <meta name="description" content="{% trans 'Workooo — daily and short-term jobs in Uzbekistan.' %}">
+    <title>{% block title %}{% trans 'Workooo — Find a job!' %}{% endblock %}</title>
+    <script>
+    (function () {
+        var el = document.documentElement;
+        var server = "{{ user_theme|default:'light'|escapejs }}";
+        var stored = typeof localStorage !== 'undefined' ? localStorage.getItem('ishtop-theme') : null;
+        var authed = {% if user.is_authenticated %}true{% else %}false{% endif %};
+        var theme = 'light';
+        if (authed) {
+            theme = server === 'dark' ? 'dark' : 'light';
+            if (typeof localStorage !== 'undefined') localStorage.setItem('ishtop-theme', theme);
+        } else {
+            theme = stored === 'dark' ? 'dark' : 'light';
+        }
+        if (theme === 'dark') el.setAttribute('data-theme', 'dark');
+        else el.removeAttribute('data-theme');
+    })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -13,108 +31,146 @@
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     {% block extra_head %}{% endblock %}
 </head>
-<body>
+<body
+    data-user-authenticated="{% if user.is_authenticated %}1{% else %}0{% endif %}"
+    data-theme-url="{% if user.is_authenticated %}{% url 'set_theme' %}{% endif %}">
+<script>
+    window.ISHTOP_I18N = {
+        themeSwitchToDark: "{% filter escapejs %}{% trans 'Switch to dark mode' %}{% endfilter %}",
+        themeSwitchToLight: "{% filter escapejs %}{% trans 'Switch to light mode' %}{% endfilter %}",
+        themeAriaDark: "{% filter escapejs %}{% trans 'Dark mode' %}{% endfilter %}",
+        themeAriaLight: "{% filter escapejs %}{% trans 'Light mode' %}{% endfilter %}",
+    };
+</script>
+
 <div id="pageProgress"></div>
 
-<nav class="navbar">
+<nav class="navbar" aria-label="{% trans 'Main navigation' %}">
     <div class="nav-inner">
         <a href="{% url 'home' %}" class="nav-logo">
-            <span class="logo-icon">💼</span>
-            <span class="logo-text">IshTop</span>
+            <span class="logo-icon" aria-hidden="true">💼</span>
+            <span class="logo-text">Workooo</span>
         </a>
 
-        <button class="nav-hamburger" id="navHamburger" aria-label="Menu">
+        <button class="nav-hamburger" id="navHamburger" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="{% trans 'Menu' %}">
             <span></span><span></span><span></span>
         </button>
 
         <div class="nav-links" id="navLinks">
-            <a href="{% url 'job_list' %}" class="nav-link">Ishlar</a>
+            <a href="{% url 'job_list' %}" class="nav-link">{% trans 'Jobs' %}</a>
             {% if user.is_authenticated %}
                 {% if user.profile.role == 'employer' %}
-                <a href="{% url 'job_create' %}" class="nav-link btn-post">+ E'lon qo'shish</a>
-                <a href="{% url 'my_jobs' %}" class="nav-link">Mening ishlarim</a>
+                <a href="{% url 'job_create' %}" class="nav-link btn-post">{% trans '+ Post a job' %}</a>
+                <a href="{% url 'my_jobs' %}" class="nav-link">{% trans 'My jobs' %}</a>
                 {% else %}
-                <a href="{% url 'my_applications' %}" class="nav-link">Arizalarim</a>
+                <a href="{% url 'my_applications' %}" class="nav-link">{% trans 'My applications' %}</a>
                 {% endif %}
 
                 <a href="{% url 'conversation_list' %}" class="nav-link nav-chat">
-                    💬 Chatlar
+                    {% trans 'Chats' %}
                     {% if unread_count %}
                     <span class="nav-badge">{{ unread_count }}</span>
                     {% endif %}
                 </a>
 
                 <div class="nav-dropdown">
-                    <button class="nav-avatar-btn">
+                    <button type="button" class="nav-avatar-btn" aria-expanded="false" aria-haspopup="true">
                         {% if user.profile.avatar %}
-                        <img src="{{ user.profile.avatar.url }}" alt="" class="nav-avatar-img">
+                        <img src="{{ user.profile.avatar.url }}" alt="" class="nav-avatar-img" width="27" height="27">
                         {% else %}
-                        <div class="nav-avatar-placeholder">{{ user.first_name|first|upper }}</div>
+                        <div class="nav-avatar-placeholder" aria-hidden="true">{{ user.first_name|first|upper }}</div>
                         {% endif %}
                         <span>{{ user.first_name|default:user.username }}</span>
-                        <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
                     </button>
                     <div class="nav-dropdown-menu">
-                        <a href="{% url 'profile_own' %}">👤 Profilim</a>
-                        <a href="{% url 'profile_edit' %}">✏️ Tahrirlash</a>
+                        <a href="{% url 'profile_own' %}">{% trans 'My profile' %}</a>
+                        <a href="{% url 'profile_edit' %}">{% trans 'Edit' %}</a>
                         <hr>
-                        <a href="{% url 'logout' %}">🚪 Chiqish</a>
+                        <a href="{% url 'logout' %}">{% trans 'Log out' %}</a>
                     </div>
                 </div>
             {% else %}
-                <a href="{% url 'login' %}" class="nav-link">Kirish</a>
-                <a href="{% url 'register' %}" class="nav-link btn-register">Ro'yxatdan o'tish</a>
+                <a href="{% url 'login' %}" class="nav-link">{% trans 'Log in' %}</a>
+                <a href="{% url 'register' %}" class="nav-link btn-register">{% trans 'Sign up' %}</a>
             {% endif %}
+
+            <div class="nav-controls">
+                <button type="button"
+                        class="theme-toggle"
+                        id="themeToggle"
+                        aria-pressed="false"
+                        aria-label="{% trans 'Switch to dark mode' %}"
+                        title="{% trans 'Theme' %}">
+                    <span class="theme-toggle-track" aria-hidden="true">
+                        <span class="theme-toggle-thumb"></span>
+                    </span>
+                </button>
+
+                {% get_available_languages as LANGUAGES %}
+                <form action="{% url 'set_language' %}" method="post" class="lang-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                    <label for="lang-select" class="visually-hidden">{% trans 'Language' %}</label>
+                    <select name="language" id="lang-select" class="nav-select" autocomplete="off" onchange="this.form.submit()">
+                        {% for code, name in LANGUAGES %}
+                        <option value="{{ code }}" {% if code == LANGUAGE_CODE %}selected{% endif %}>{{ name }}</option>
+                        {% endfor %}
+                    </select>
+                </form>
+            </div>
         </div>
     </div>
 </nav>
 
-<div class="messages-container">
+<div class="messages-container" role="status" aria-live="polite">
     {% for msg in messages %}
     <div class="alert alert-{{ msg.tags }}">
         <span>{{ msg }}</span>
-        <button onclick="this.parentElement.remove()">×</button>
+        <button type="button" class="alert-dismiss" aria-label="{% trans 'Close notification' %}">×</button>
     </div>
     {% endfor %}
 </div>
 
-<main class="main-content">
+<main class="main-content" id="main-content">
     {% block content %}{% endblock %}
 </main>
 
 <footer class="footer">
     <div class="footer-inner">
         <div class="footer-brand">
-            <a href="{% url 'home' %}"><span class="logo-icon">💼</span> <strong>IshTop</strong></a>
-            <p>O'zbekistonda kunlik ish bozori</p>
+            <a href="{% url 'home' %}"><span class="logo-icon" aria-hidden="true">💼</span> <span class="logo-text">Workooo</span></a>
+            <p>{% trans 'Daily job market in Uzbekistan' %}</p>
         </div>
         <div class="footer-links">
             <div>
-                <h4>Sahifalar</h4>
-                <a href="{% url 'job_list' %}">Barcha ishlar</a>
+                <h4>{% trans 'Pages' %}</h4>
+                <a href="{% url 'job_list' %}">{% trans 'All jobs' %}</a>
                 {% if user.is_authenticated and user.profile.role == 'employer' %}
-                <a href="{% url 'job_create' %}">Ish e'lon qilish</a>
+                <a href="{% url 'job_create' %}">{% trans 'Post a job' %}</a>
                 {% endif %}
             </div>
             <div>
-                <h4>Hisob</h4>
+                <h4>{% trans 'Account' %}</h4>
                 {% if user.is_authenticated %}
-                <a href="{% url 'profile_own' %}">Profilim</a>
-                <a href="{% url 'conversation_list' %}">Chatlar{% if unread_count %} ({{ unread_count }}){% endif %}</a>
-                <a href="{% url 'logout' %}">Chiqish</a>
+                <a href="{% url 'profile_own' %}">{% trans 'My profile' %}</a>
+                <a href="{% url 'conversation_list' %}">{% trans 'Chats' %}{% if unread_count %} ({{ unread_count }}){% endif %}</a>
+                <a href="{% url 'logout' %}">{% trans 'Log out' %}</a>
                 {% else %}
-                <a href="{% url 'login' %}">Kirish</a>
-                <a href="{% url 'register' %}">Ro'yxatdan o'tish</a>
+                <a href="{% url 'login' %}">{% trans 'Log in' %}</a>
+                <a href="{% url 'register' %}">{% trans 'Sign up' %}</a>
                 {% endif %}
             </div>
         </div>
     </div>
     <div class="footer-bottom">
-        <p>© 2026 IshTop. Barcha huquqlar himoyalangan.</p>
+        <p>{% blocktrans %}© 2026 Workooo. All rights reserved.{% endblocktrans %}</p>
     </div>
 </footer>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="{% url 'javascript_catalog' %}"></script>
+<script src="{% static 'js/theme.js' %}"></script>
 <script src="{% static 'js/main.js' %}"></script>
 {% block extra_js %}{% endblock %}
 </body>

@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import JsonResponse
 from django.db.models import Q
+from django.utils.translation import gettext as _
+
 from .models import Job, JobApplication
 from .forms import JobForm, JobApplicationForm
 from accounts.models import REGIONS, UserProfile
@@ -73,7 +74,7 @@ def job_detail_view(request, pk):
 def job_create_view(request):
     profile = get_object_or_404(UserProfile, user=request.user)
     if profile.role != 'employer':
-        messages.error(request, "Faqat ish beruvchilar ish e'lon qila oladi.")
+        messages.error(request, _('Only employers can post jobs.'))
         return redirect('job_list')
 
     if request.method == 'POST':
@@ -82,7 +83,7 @@ def job_create_view(request):
             job = form.save(commit=False)
             job.employer = request.user
             job.save()
-            messages.success(request, "Ish e'loni muvaffaqiyatli joylashtirildi!")
+            messages.success(request, _('Your job listing was published successfully!'))
             return redirect('job_detail', pk=job.pk)
     else:
         form = JobForm()
@@ -96,7 +97,7 @@ def job_edit_view(request, pk):
         form = JobForm(request.POST, request.FILES, instance=job)
         if form.is_valid():
             form.save()
-            messages.success(request, "Ish e'loni yangilandi!")
+            messages.success(request, _('The job listing was updated!'))
             return redirect('job_detail', pk=job.pk)
     else:
         form = JobForm(instance=job)
@@ -108,7 +109,7 @@ def job_delete_view(request, pk):
     job = get_object_or_404(Job, pk=pk, employer=request.user)
     if request.method == 'POST':
         job.delete()
-        messages.success(request, "Ish e'loni o'chirildi.")
+        messages.success(request, _('The job listing was deleted.'))
         return redirect('my_jobs')
     return render(request, 'jobs/job_confirm_delete.html', {'job': job})
 
@@ -124,7 +125,9 @@ def my_jobs_view(request):
 
 @login_required
 def my_applications_view(request):
-    applications = JobApplication.objects.filter(worker=request.user).select_related('job', 'job__employer', 'job__employer__profile')
+    applications = JobApplication.objects.filter(worker=request.user).select_related(
+        'job', 'job__employer', 'job__employer__profile'
+    )
     return render(request, 'jobs/my_applications.html', {'applications': applications})
 
 
@@ -134,15 +137,15 @@ def apply_job_view(request, pk):
     profile = get_object_or_404(UserProfile, user=request.user)
 
     if profile.role != 'worker':
-        messages.error(request, "Faqat ishchilar ariza topshira oladi.")
+        messages.error(request, _('Only workers can apply.'))
         return redirect('job_detail', pk=pk)
 
     if request.user == job.employer:
-        messages.error(request, "O'z e'loningizga ariza topshira olmaysiz.")
+        messages.error(request, _('You cannot apply to your own listing.'))
         return redirect('job_detail', pk=pk)
 
     if JobApplication.objects.filter(job=job, worker=request.user).exists():
-        messages.warning(request, "Siz allaqachon bu ishga ariza topshirgansiz.")
+        messages.warning(request, _('You have already applied to this job.'))
         return redirect('job_detail', pk=pk)
 
     if request.method == 'POST':
@@ -152,7 +155,10 @@ def apply_job_view(request, pk):
             app.job = job
             app.worker = request.user
             app.save()
-            messages.success(request, "Arizangiz yuborildi! Ish beruvchi tasdiqlashini kuting.")
+            messages.success(
+                request,
+                _('Your application was sent! Wait for the employer to respond.'),
+            )
             return redirect('job_detail', pk=pk)
     return redirect('job_detail', pk=pk)
 
@@ -161,7 +167,7 @@ def apply_job_view(request, pk):
 def manage_application_view(request, pk):
     application = get_object_or_404(JobApplication, pk=pk)
     if request.user != application.job.employer:
-        messages.error(request, "Ruxsat yo'q.")
+        messages.error(request, _('Permission denied.'))
         return redirect('home')
 
     action = request.POST.get('action')
@@ -169,20 +175,23 @@ def manage_application_view(request, pk):
         application.status = 'qabul_qilindi'
         application.save()
 
-        # Create conversation
         from chat.models import Conversation
-        conversation, created = Conversation.objects.get_or_create(
+        conversation, _created = Conversation.objects.get_or_create(
             job=application.job,
             employer=request.user,
             worker=application.worker
         )
-        messages.success(request, f"{application.worker.get_full_name() or application.worker.username} qabul qilindi. Chat ochildi!")
+        name = application.worker.get_full_name() or application.worker.username
+        messages.success(
+            request,
+            _('%(name)s was accepted. Chat is now open!') % {'name': name},
+        )
         return redirect('conversation_detail', pk=conversation.pk)
 
     elif action == 'reject':
         application.status = 'rad_etildi'
         application.save()
-        messages.info(request, "Ariza rad etildi.")
+        messages.info(request, _('Application was rejected.'))
 
     return redirect('job_detail', pk=application.job.pk)
 
@@ -193,5 +202,5 @@ def complete_job_view(request, pk):
     if request.method == 'POST':
         job.status = 'tugallangan'
         job.save()
-        messages.success(request, "Ish tugallangan deb belgilandi.")
+        messages.success(request, _('The job was marked as completed.'))
     return redirect('my_jobs')

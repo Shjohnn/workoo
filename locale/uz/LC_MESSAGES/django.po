@@ -1,0 +1,755 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Workooo 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-12 12:00+0000\n"
+"PO-Revision-Date: 2026-04-12 12:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: uz\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Workooo — daily and short-term jobs in Uzbekistan."
+msgstr "Workooo — O'zbekistonda kunlik va qisqa muddatli ishlar."
+
+msgid "Workooo — Find a job!"
+msgstr "Workooo — Ish toping!"
+
+msgid "Switch to dark mode"
+msgstr "Qorong'u rejimga o'tish"
+
+msgid "Switch to light mode"
+msgstr "Yorug' rejimga o'tish"
+
+msgid "Dark mode"
+msgstr "Qorong'u rejim"
+
+msgid "Light mode"
+msgstr "Yorug' rejim"
+
+msgid "Main navigation"
+msgstr "Asosiy navigatsiya"
+
+msgid "Menu"
+msgstr "Menyu"
+
+msgid "Jobs"
+msgstr "Ishlar"
+
+msgid "+ Post a job"
+msgstr "+ E'lon qo'shish"
+
+msgid "My jobs"
+msgstr "Mening ishlarim"
+
+msgid "My applications"
+msgstr "Arizalarim"
+
+msgid "Chats"
+msgstr "Chatlar"
+
+msgid "My profile"
+msgstr "Profilim"
+
+msgid "Edit"
+msgstr "Tahrirlash"
+
+msgid "Log out"
+msgstr "Chiqish"
+
+msgid "Log in"
+msgstr "Kirish"
+
+msgid "Sign up"
+msgstr "Ro'yxatdan o'tish"
+
+msgid "Theme"
+msgstr "Mavzu"
+
+msgid "Language"
+msgstr "Til"
+
+msgid "Close notification"
+msgstr "Bildirishnomani yopish"
+
+msgid "Daily job market in Uzbekistan"
+msgstr "O'zbekistonda kunlik ish bozori"
+
+msgid "Pages"
+msgstr "Sahifalar"
+
+msgid "All jobs"
+msgstr "Barcha ishlar"
+
+msgid "Post a job"
+msgstr "Ish e'lon qilish"
+
+msgid "Account"
+msgstr "Hisob"
+
+msgid "© 2026 Workooo. All rights reserved."
+msgstr "© 2026 Workooo. Barcha huquqlar himoyalangan."
+
+msgid "Home"
+msgstr "Bosh sahifa"
+
+msgid "In Uzbekistan"
+msgstr "O'zbekistonda"
+
+msgid "find a job"
+msgstr "ish toping"
+
+msgid "or"
+msgstr "yoki"
+
+msgid "hire workers"
+msgstr "ishchi yollang"
+
+msgid ""
+"Find daily and short-term jobs in your region. Fast, easy, and reliable."
+msgstr ""
+"Viloyatingizdagi kunlik va qisqa muddatli ishlarni toping. Tez, oson va "
+"ishonchli."
+
+msgid "Browse jobs"
+msgstr "Ishlarni ko'rish"
+
+msgid "12 regions"
+msgstr "12 viloyat"
+
+msgid "Quick application"
+msgstr "Tez ariza"
+
+msgid "Rating system"
+msgstr "Baholash tizimi"
+
+msgid "Search jobs"
+msgstr "Ishlarni qidirish"
+
+msgid "Job title, keywords…"
+msgstr "Ish nomi, kalit so'z…"
+
+msgid "Search"
+msgstr "Qidirish"
+
+msgid "Construction"
+msgstr "Qurilish"
+
+msgid "Moving"
+msgstr "Yuk tashish"
+
+msgid "Cleaning"
+msgstr "Tozalash"
+
+msgid "Agriculture"
+msgstr "Qishloq xo'jaligi"
+
+msgid "Retail"
+msgstr "Savdo"
+
+msgid "Education"
+msgstr "Ta'lim"
+
+msgid "Cafe"
+msgstr "Cafe"
+
+msgid "IT"
+msgstr "IT"
+
+msgid "Latest listings"
+msgstr "Yangi e'lonlar"
+
+msgid "See all"
+msgstr "Barchasini ko'rish"
+
+msgid "Address not specified"
+msgstr "Manzil ko'rsatilmagan"
+
+msgid "ago"
+msgstr "oldin"
+
+msgid "No jobs yet"
+msgstr "Hozircha ishlar yo'q"
+
+msgid "Check back soon or post the first listing."
+msgstr "Birinchi e'lon bo'lishini kuting yoki o'zingiz joylashtiring."
+
+msgid "Post the first job"
+msgstr "Birinchi e'lonni joylashtiring"
+
+msgid "How it works"
+msgstr "Qanday ishlaydi"
+
+msgid "Four simple steps"
+msgstr "4 ta oddiy qadam"
+
+msgid "1. Sign up"
+msgstr "1. Ro'yxatdan o'ting"
+
+msgid "Register quickly as a worker or employer."
+msgstr "Ishchi yoki ish beruvchi sifatida tez ro'yxatdan o'ting."
+
+msgid "2. Find a job"
+msgstr "2. Ish toping"
+
+msgid "Browse jobs in your region and use filters."
+msgstr "Viloyatingizdagi ishlarni ko'ring, filter qiling."
+
+msgid "3. Chat"
+msgstr "3. Chat"
+
+msgid "Apply — when accepted, chat opens."
+msgstr "Ariza yuboring, qabul qilinsa chat ochiladi."
+
+msgid "4. Rate"
+msgstr "4. Baholang"
+
+msgid "After the job, leave a rating — trust grows."
+msgstr "Ish tugagach baho qoldiring — ishonch quriladi."
+
+msgid "Sign in"
+msgstr "Tizimga kirish"
+
+msgid "Username"
+msgstr "Foydalanuvchi nomi"
+
+msgid "Password"
+msgstr "Parol"
+
+msgid "No account?"
+msgstr "Hisobingiz yo'qmi?"
+
+msgid "I am a worker"
+msgstr "Men ishchi"
+
+msgid "I am looking for work"
+msgstr "Ish qidiraman"
+
+msgid "I am an employer"
+msgstr "Men ish beruvchi"
+
+msgid "I want to hire"
+msgstr "Ishchi yollayman"
+
+msgid "Already have an account?"
+msgstr "Hisobingiz bormi?"
+
+msgid "Search and filters"
+msgstr "Qidirish va filter"
+
+msgid "Keywords"
+msgstr "Kalit so'z"
+
+msgid "Job title or address…"
+msgstr "Ish nomi yoki manzil…"
+
+msgid "All regions"
+msgstr "Barcha viloyatlar"
+
+msgid "All categories"
+msgstr "Barcha kategoriyalar"
+
+msgid "Clear"
+msgstr "Tozalash"
+
+msgid "Search results"
+msgstr "Qidiruv natijalari"
+
+msgid "All listings"
+msgstr "Barcha e'lonlar"
+
+msgid "workers"
+msgstr "ishchi"
+
+msgid "No jobs found"
+msgstr "Ishlar topilmadi"
+
+msgid "Try changing your filters."
+msgstr "Filter sozlamalarini o'zgartiring."
+
+msgid "Show all jobs"
+msgstr "Barcha ishlarni ko'rish"
+
+msgid "About the job"
+msgstr "Ish haqida"
+
+msgid "Location"
+msgstr "Joylashuv"
+
+msgid "Loading…"
+msgstr "Yuklanmoqda…"
+
+msgid "Fullscreen"
+msgstr "To'liq ekran"
+
+msgid "My location"
+msgstr "Mening joylashuvim"
+
+msgid "Directions"
+msgstr "Yo'nalish olish"
+
+msgid "Applications"
+msgstr "Arizalar"
+
+msgid "Accept"
+msgstr "Qabul qilish"
+
+msgid "Reject"
+msgstr "Rad etish"
+
+msgid "Rate"
+msgstr "Baholash"
+
+msgid "Employer"
+msgstr "Ish beruvchi"
+
+msgid "Open chat"
+msgstr "Chatga o'tish"
+
+msgid "More jobs"
+msgstr "Boshqa ishlar"
+
+msgid "Apply"
+msgstr "Ariza topshirish"
+
+msgid "Delete"
+msgstr "O'chirish"
+
+msgid "Address not found"
+msgstr "Manzil topilmadi"
+
+msgid "You are here"
+msgstr "Siz shu yerdasiz"
+
+msgid "Edit listing"
+msgstr "E'lonni tahrirlash"
+
+msgid "Post a new job"
+msgstr "Yangi ish e'lon qilish"
+
+msgid "Basic information"
+msgstr "Asosiy ma'lumotlar"
+
+msgid "Payment and schedule"
+msgstr "To'lov va muddat"
+
+msgid "Click to enlarge"
+msgstr "Kattalashtirish uchun bosing"
+
+msgid "Click the map to set location or use GPS."
+msgstr "Xaritani bosib joylashuvni tanlang yoki GPS dan foydalaning."
+
+msgid "Extras"
+msgstr "Qo'shimcha"
+
+msgid "Save"
+msgstr "Saqlash"
+
+msgid "Publish"
+msgstr "E'lon qilish"
+
+msgid "Cancel"
+msgstr "Bekor qilish"
+
+msgid "Back"
+msgstr "Orqaga"
+
+msgid "Choose location"
+msgstr "Joylashuvni tanlang"
+
+msgid "Confirm"
+msgstr "Tasdiqlash"
+
+msgid "Tap the map or drag the marker"
+msgstr "Xaritadan joy bosing yoki belgi sudrang"
+
+msgid "Pick a location on the map"
+msgstr "Xaritadan joy tanlang"
+
+msgid "Geolocation is not supported"
+msgstr "Geolokatsiya qo'llab-quvvatlanmaydi"
+
+msgid "Locating…"
+msgstr "Aniqlanmoqda…"
+
+msgid "Could not get location. Check browser permissions."
+msgstr "Joylashuv aniqlanmadi. Brauzer ruxsatini tekshiring."
+
+msgid "My listings"
+msgstr "Mening e'lonlarim"
+
+msgid "+ New listing"
+msgstr "+ Yangi e'lon"
+
+msgid "applications"
+msgstr "ariza"
+
+msgid "accepted"
+msgstr "qabul"
+
+msgid "View"
+msgstr "Ko'rish"
+
+msgid "Mark this job as completed?"
+msgstr "Ishni tugallanding?"
+
+msgid "Complete"
+msgstr "Tugallash"
+
+msgid "Delete this listing?"
+msgstr "O'chirilsinmi?"
+
+msgid "No listings yet"
+msgstr "Hali e'lon yo'q"
+
+msgid "Post your first job!"
+msgstr "Birinchi ish e'loningizni joylashtiring!"
+
+msgid "No applications yet"
+msgstr "Hali ariza yo'q"
+
+msgid "Delete listing"
+msgstr "E'lonni o'chirish"
+
+msgid "This action cannot be undone."
+msgstr "Bu amalni qaytarib bo'lmaydi."
+
+msgid "Yes, delete"
+msgstr "Ha, o'chirish"
+
+msgid "reviews"
+msgstr "sharh"
+
+msgid "Posted jobs"
+msgstr "Joylashtirilgan ishlar"
+
+msgid "Application history"
+msgstr "Ariza tarixim"
+
+msgid "Ratings and reviews"
+msgstr "Baholar va sharhlar"
+
+msgid "Edit profile"
+msgstr "Profilni tahrirlash"
+
+msgid "Current photo"
+msgstr "Joriy rasm"
+
+msgid "Chat"
+msgstr "Chat"
+
+msgid "No messages yet. Say hello!"
+msgstr "Hali xabar yo'q. Birinchi bo'ling!"
+
+msgid "Message"
+msgstr "Xabar"
+
+msgid "Type a message…"
+msgstr "Xabar yozing…"
+
+msgid "Send"
+msgstr "Yuborish"
+
+msgid "No chats yet"
+msgstr "Hali chat yo'q"
+
+msgid "Unread messages"
+msgstr "O'qilmagan xabarlar"
+
+msgid "Unread"
+msgstr "O'qilmagan"
+
+msgid "Apply to a job — when accepted, a chat will open."
+msgstr "Ishga ariza topshiring va qabul qilinganda chat ochiladi."
+
+msgid "Rate worker"
+msgstr "Ishchini baholash"
+
+msgid "Job:"
+msgstr "Ish:"
+
+msgid "Rating (1 to 5)"
+msgstr "Baho (1 dan 5 gacha)"
+
+msgid "Stars"
+msgstr "Yulduz"
+
+msgid "Comment (optional)"
+msgstr "Izoh (ixtiyoriy)"
+
+msgid "Your feedback about the work…"
+msgstr "Ish haqida fikringiz…"
+
+msgid "Submit rating"
+msgstr "Baholash"
+
+msgid "Ratings"
+msgstr "Baholar"
+
+msgid "Ratings for"
+msgstr "Baholar"
+
+msgid "Average:"
+msgstr "O'rtacha:"
+
+msgid "No ratings yet."
+msgstr "Hali baholar yo'q."
+
+msgid "Back to profile"
+msgstr "Profilga qaytish"
+
+msgid "Only employers can post jobs."
+msgstr "Faqat ish beruvchilar ish e'lon qila oladi."
+
+msgid "Your job listing was published successfully!"
+msgstr "Ish e'loni muvaffaqiyatli joylashtirildi!"
+
+msgid "The job listing was updated!"
+msgstr "Ish e'loni yangilandi!"
+
+msgid "The job listing was deleted."
+msgstr "Ish e'loni o'chirildi."
+
+msgid "Only workers can apply."
+msgstr "Faqat ishchilar ariza topshira oladi."
+
+msgid "You cannot apply to your own listing."
+msgstr "O'z e'loningizga ariza topshira olmaysiz."
+
+msgid "You have already applied to this job."
+msgstr "Siz allaqachon bu ishga ariza topshirgansiz."
+
+msgid "Your application was sent! Wait for the employer to respond."
+msgstr "Arizangiz yuborildi! Ish beruvchi tasdiqlashini kuting."
+
+msgid "Permission denied."
+msgstr "Ruxsat yo'q."
+
+msgid "%(name)s was accepted. Chat is now open!"
+msgstr "%(name)s qabul qilindi. Chat ochildi!"
+
+msgid "Application was rejected."
+msgstr "Ariza rad etildi."
+
+msgid "The job was marked as completed."
+msgstr "Ish tugallangan deb belgilandi."
+
+msgid "Only the employer can leave a rating."
+msgstr "Faqat ish beruvchi baholashi mumkin."
+
+msgid "You have already rated this worker for this job."
+msgstr "Siz bu ishchini allaqachon baholagansiz."
+
+msgid "This worker was not accepted for this job."
+msgstr "Bu ishchi sizning ishingizda qabul qilinmagan."
+
+msgid "%(name)s was rated!"
+msgstr "%(name)s baholandi!"
+
+msgid "Invalid rating."
+msgstr "Noto'g'ri baho."
+
+msgid "Invalid request."
+msgstr "Noto'g'ri so'rov"
+
+msgid "Invalid JSON."
+msgstr "Noto'g'ri JSON"
+
+msgid "Welcome, %(name)s! Your account was created successfully."
+msgstr "Xush kelibsiz, %(name)s! Hisobingiz muvaffaqiyatli yaratildi."
+
+msgid "Incorrect username or password."
+msgstr "Foydalanuvchi nomi yoki parol noto'g'ri."
+
+msgid "Profile updated successfully!"
+msgstr "Profil muvaffaqiyatli yangilandi!"
+
+msgid "— Select region —"
+msgstr "— Viloyatni tanlang —"
+
+msgid "Email (optional)"
+msgstr "Email (ixtiyoriy)"
+
+msgid "Phone (optional)"
+msgstr "Telefon raqam (ixtiyoriy)"
+
+msgid "Password confirmation"
+msgstr "Parolni tasdiqlash"
+
+msgid "Job title"
+msgstr "Ish nomi"
+
+msgid "Job description"
+msgstr "Ish tavsifi"
+
+msgid "Category"
+msgstr "Kategoriya"
+
+msgid "Payment amount (UZS)"
+msgstr "To'lov miqdori (so'mda)"
+
+msgid "Payment type"
+msgstr "To'lov turi"
+
+msgid "Region"
+msgstr "Viloyat"
+
+msgid "Address"
+msgstr "Manzil"
+
+msgid "Image (optional)"
+msgstr "Rasm (ixtiyoriy)"
+
+msgid "Workers needed"
+msgstr "Nechta ishchi kerak"
+
+msgid "Work date"
+msgstr "Ish sanasi"
+
+msgid "Status"
+msgstr "Holat"
+
+msgid "Additional message (optional)"
+msgstr "Qo'shimcha xabar (ixtiyoriy)"
+
+msgid "Briefly describe yourself..."
+msgstr "O'zingiz haqingizda qisqacha yozing..."
+
+msgid "First name"
+msgstr "Ismi"
+
+msgid "Last name"
+msgstr "Familiyasi"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Profile photo"
+msgstr "Profil rasmi"
+
+msgid "About you"
+msgstr "O'zingiz haqingizda"
+
+msgid "Phone"
+msgstr "Telefon raqam"
+
+msgid "Rating from 1 to 5"
+msgstr "1 dan 5 gacha baho"
+
+msgid "Construction and repair"
+msgstr "Qurilish va ta'mirlash"
+
+msgid "Moving and delivery"
+msgstr "Yuk tashish va ko'chirish"
+
+msgid "Cleaning service"
+msgstr "Tozalash xizmati"
+
+msgid "Retail and services"
+msgstr "Savdo va xizmat"
+
+msgid "IT and computers"
+msgstr "IT va kompyuter"
+
+msgid "Education and tutoring"
+msgstr "Ta'lim va repetitorlik"
+
+msgid "Healthcare"
+msgstr "Sog'liqni saqlash"
+
+msgid "Cafe and restaurant"
+msgstr "Cafe va restoran"
+
+msgid "Other"
+msgstr "Boshqa"
+
+msgid "Open"
+msgstr "Ochiq"
+
+msgid "Closed"
+msgstr "Yopiq"
+
+msgid "Completed"
+msgstr "Tugallangan"
+
+msgid "Pending"
+msgstr "Kutilmoqda"
+
+msgid "Accepted"
+msgstr "Qabul qilindi"
+
+msgid "Rejected"
+msgstr "Rad etildi"
+
+msgid "In UZS"
+msgstr "So'mda"
+
+msgid "Daily"
+msgstr "Kunlik"
+
+msgid "Hourly"
+msgstr "Soatlik"
+
+msgid "Project"
+msgstr "Loyiha"
+
+msgid "Optional message"
+msgstr "Qo'shimcha xabar (ixtiyoriy)"
+
+msgid "%(amount)s UZS / %(period)s"
+msgstr "%(amount)s so'm / %(period)s"
+
+msgid "Worker"
+msgstr "Ishchi"
+
+msgid "Light"
+msgstr "Yorug'"
+
+msgid "Dark"
+msgstr "Qorong'u"
+
+msgid "Tashkent city"
+msgstr "Toshkent shahri"
+
+msgid "Tashkent region"
+msgstr "Toshkent viloyati"
+
+msgid "Andijan region"
+msgstr "Andijon viloyati"
+
+msgid "Fergana region"
+msgstr "Farg'ona viloyati"
+
+msgid "Namangan region"
+msgstr "Namangan viloyati"
+
+msgid "Samarkand region"
+msgstr "Samarqand viloyati"
+
+msgid "Bukhara region"
+msgstr "Buxoro viloyati"
+
+msgid "Kashkadarya region"
+msgstr "Qashqadaryo viloyati"
+
+msgid "Surkhandarya region"
+msgstr "Surxondaryo viloyati"
+
+msgid "Jizzakh region"
+msgstr "Jizzax viloyati"
+
+msgid "Syrdarya region"
+msgstr "Sirdaryo viloyati"
+
+msgid "Navoi region"
+msgstr "Navoiy viloyati"
+
+msgid "Khorezm region"
+msgstr "Xorazm viloyati"
+
+msgid "Republic of Karakalpakstan"
+msgstr "Qoraqalpog'iston Respublikasi"

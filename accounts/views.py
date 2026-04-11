@@ -1,8 +1,14 @@
+import json
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.utils.translation import gettext as _
+
 from .forms import RegisterForm, ProfileEditForm
 from .models import UserProfile
 from ratings.models import Rating
@@ -19,7 +25,12 @@ def register_view(request):
                 role = 'worker'
             user = form.save(role=role)
             login(request, user)
-            messages.success(request, f"Xush kelibsiz, {user.first_name}! Hisobingiz muvaffaqiyatli yaratildi.")
+            messages.success(
+                request,
+                _('Welcome, %(name)s! Your account was created successfully.') % {
+                    'name': user.first_name or user.username,
+                },
+            )
             return redirect('home')
     else:
         form = RegisterForm()
@@ -39,7 +50,7 @@ def login_view(request):
             next_url = request.GET.get('next', '/')
             return redirect(next_url)
         else:
-            error = "Foydalanuvchi nomi yoki parol noto'g'ri."
+            error = _('Incorrect username or password.')
     return render(request, 'accounts/login.html', {'error': error})
 
 
@@ -85,8 +96,24 @@ def profile_edit_view(request):
             request.user.email = form.cleaned_data.get('email', '')
             request.user.save()
             form.save()
-            messages.success(request, "Profil muvaffaqiyatli yangilandi!")
+            messages.success(request, _('Profile updated successfully!'))
             return redirect('profile_own')
     else:
         form = ProfileEditForm(instance=profile, user=request.user)
     return render(request, 'accounts/profile_edit.html', {'form': form})
+
+
+@login_required
+@require_POST
+def set_theme_view(request):
+    try:
+        data = json.loads(request.body.decode('utf-8'))
+    except (json.JSONDecodeError, UnicodeDecodeError):
+        return JsonResponse({'ok': False, 'error': 'invalid_json'}, status=400)
+    theme = data.get('theme')
+    if theme not in ('light', 'dark'):
+        return JsonResponse({'ok': False, 'error': 'invalid_theme'}, status=400)
+    profile = request.user.profile
+    profile.theme_preference = theme
+    profile.save(update_fields=['theme_preference'])
+    return JsonResponse({'ok': True})

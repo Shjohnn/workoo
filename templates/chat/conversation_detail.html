@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
-{% block title %}Chat — IshTop{% endblock %}
+{% load i18n %}
+{% block title %}{% trans 'Chat' %} — Workooo{% endblock %}
 {% block content %}
 <div class="container chat-page">
     <div class="chat-header-bar">
-        <a href="{% url 'conversation_list' %}" class="btn btn-ghost btn-sm">← Orqaga</a>
+        <a href="{% url 'conversation_list' %}" class="btn btn-ghost btn-sm">← {% trans 'Back' %}</a>
         <div class="chat-partner-info">
             {% if user == conversation.employer %}
             <strong>{{ conversation.worker.get_full_name|default:conversation.worker.username }}</strong>
@@ -22,14 +23,15 @@
             <span class="bubble-time">{{ msg.timestamp|time:"H:i" }}</span>
         </div>
         {% empty %}
-        <div class="chat-empty">Hali xabar yo'q. Birinchi bo'ling!</div>
+        <div class="chat-empty">{% trans 'No messages yet. Say hello!' %}</div>
         {% endfor %}
     </div>
 
     <form class="chat-input-bar" id="chatForm">
         {% csrf_token %}
-        <input type="text" id="chatInput" placeholder="Xabar yozing..." autocomplete="off" class="form-control">
-        <button type="submit" class="btn btn-primary chat-send-btn">➤</button>
+        <label for="chatInput" class="visually-hidden">{% trans 'Message' %}</label>
+        <input type="text" id="chatInput" placeholder="{% trans 'Type a message…' %}" autocomplete="off" class="form-control">
+        <button type="submit" class="btn btn-primary chat-send-btn" aria-label="{% trans 'Send' %}">➤</button>
     </form>
 </div>
 {% endblock %}
@@ -41,7 +43,6 @@
     const pollUrl = "{% url 'get_messages' conversation.pk %}";
     const csrfToken = document.cookie.match(/csrftoken=([^;]+)/)?.[1] || '';
 
-    // Get last message ID from rendered bubbles
     let lastMsgId = 0;
     document.querySelectorAll('[data-id]').forEach(el => {
         const id = parseInt(el.dataset.id);
@@ -89,7 +90,6 @@
         });
     });
 
-    // Poll for new messages every 2.5 seconds
     setInterval(function () {
         fetch(`${pollUrl}?after=${lastMsgId}`)
             .then(r => r.json())
@@ -103,7 +103,7 @@
                     });
                 }
             })
-            .catch(() => {}); // ignore network errors silently
+            .catch(() => {});
     }, 2500);
 </script>
 {% endblock %}

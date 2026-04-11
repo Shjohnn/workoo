@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.utils.translation import gettext as _
+
 from .models import Rating
 from jobs.models import Job, JobApplication
 
@@ -12,16 +14,15 @@ def rate_worker_view(request, job_pk, worker_pk):
     worker = get_object_or_404(User, pk=worker_pk)
 
     if request.user != job.employer:
-        messages.error(request, "Faqat ish beruvchi baholashi mumkin.")
+        messages.error(request, _('Only the employer can leave a rating.'))
         return redirect('home')
 
     if Rating.objects.filter(worker=worker, employer=request.user, job=job).exists():
-        messages.warning(request, "Siz bu ishchini allaqachon baholagansiz.")
+        messages.warning(request, _('You have already rated this worker for this job.'))
         return redirect('job_detail', pk=job.pk)
 
-    # Check that worker was accepted for this job
     if not JobApplication.objects.filter(job=job, worker=worker, status='qabul_qilindi').exists():
-        messages.error(request, "Bu ishchi sizning ishingizda qabul qilinmagan.")
+        messages.error(request, _('This worker was not accepted for this job.'))
         return redirect('job_detail', pk=job.pk)
 
     if request.method == 'POST':
@@ -37,11 +38,12 @@ def rate_worker_view(request, job_pk, worker_pk):
                     score=score,
                     comment=comment
                 )
-                messages.success(request, f"{worker.get_full_name() or worker.username} baholandi!")
+                name = worker.get_full_name() or worker.username
+                messages.success(request, _('%(name)s was rated!') % {'name': name})
                 return redirect('job_detail', pk=job.pk)
         except (ValueError, TypeError):
             pass
-        messages.error(request, "Noto'g'ri baho.")
+        messages.error(request, _('Invalid rating.'))
 
     worker_profile = worker.profile
     return render(request, 'ratings/rate_worker.html', {

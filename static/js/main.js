@@ -64,8 +64,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const navLinks = document.getElementById('navLinks');
     if (hamburger && navLinks) {
         hamburger.addEventListener('click', function () {
-            navLinks.classList.toggle('open');
+            var open = navLinks.classList.toggle('open');
             hamburger.classList.toggle('active');
+            hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
         });
         document.addEventListener('click', function (e) {
             if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
@@ -79,13 +80,20 @@ document.addEventListener('DOMContentLoaded', function () {
     // 5. Alert auto dismiss
     // ========================
     document.querySelectorAll('.alert').forEach(function (alert) {
+        var dismissBtn = alert.querySelector('.alert-dismiss');
+        if (dismissBtn) {
+            dismissBtn.addEventListener('click', function () {
+                alert.remove();
+            });
+        }
         setTimeout(function () {
             alert.style.opacity = '0';
             alert.style.transform = 'translateX(120%)';
             alert.style.transition = 'all .3s ease';
-            setTimeout(function () { alert.remove(); }, 350);
+            setTimeout(function () { if (alert.parentNode) alert.remove(); }, 350);
         }, 5000);
     });
+
 
     // ========================
     // 6. Filter form selects auto-submit

@@ -1,20 +1,20 @@
 {% extends 'base.html' %}
-{% block title %}Ro'yxatdan o'tish — IshTop{% endblock %}
+{% load i18n %}
+{% block title %}{% trans 'Sign up' %} — Workooo{% endblock %}
 {% block content %}
 <div class="auth-page">
     <div class="auth-card auth-card-wide">
-        <div class="auth-logo">💼 IshTop</div>
-        <h2>Ro'yxatdan o'tish</h2>
+        <div class="auth-logo">💼 <span class="logo-text">Workooo</span></div>
+        <h2>{% trans 'Sign up' %}</h2>
 
-        <!-- Role selector tabs -->
         <div class="role-tabs">
             <button class="role-tab active" data-role="worker" type="button">
-                🧰 Men ishchi
-                <small>Ish qidiraman</small>
+                🧰 {% trans 'I am a worker' %}
+                <small>{% trans 'I am looking for work' %}</small>
             </button>
             <button class="role-tab" data-role="employer" type="button">
-                🏢 Men ish beruvchi
-                <small>Ishchi yollaymin</small>
+                🏢 {% trans 'I am an employer' %}
+                <small>{% trans 'I want to hire' %}</small>
             </button>
         </div>
 
@@ -83,9 +83,9 @@
             </div>
             {% endif %}
 
-            <button type="submit" class="btn btn-primary btn-block btn-lg">Ro'yxatdan o'tish</button>
+            <button type="submit" class="btn btn-primary btn-block btn-lg">{% trans 'Sign up' %}</button>
         </form>
-        <p class="auth-switch">Hisobingiz bormi? <a href="{% url 'login' %}">Kirish</a></p>
+        <p class="auth-switch">{% trans 'Already have an account?' %} <a href="{% url 'login' %}">{% trans 'Log in' %}</a></p>
     </div>
 </div>
 {% endblock %}

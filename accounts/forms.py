@@ -1,26 +1,33 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from django.utils.translation import gettext_lazy as _
+
 from .models import UserProfile, REGIONS, ROLES
 
 
 class RegisterForm(UserCreationForm):
-    first_name = forms.CharField(max_length=50, required=True, label="Ismi")
-    last_name = forms.CharField(max_length=50, required=True, label="Familiyasi")
-    email = forms.EmailField(required=False, label="Email (ixtiyoriy)")
+    first_name = forms.CharField(max_length=50, required=True, label=_('First name'))
+    last_name = forms.CharField(max_length=50, required=True, label=_('Last name'))
+    email = forms.EmailField(required=False, label=_('Email (optional)'))
     region = forms.ChoiceField(
-        choices=[('', '-- Viloyatni tanlang --')] + list(REGIONS),
-        label="Viloyat",
+        choices=[('', _('— Select region —'))] + list(REGIONS),
+        label=_('Region'),
         required=False,
     )
-    phone = forms.CharField(max_length=20, required=False, label="Telefon raqam (ixtiyoriy)")
+    phone = forms.CharField(max_length=20, required=False, label=_('Phone (optional)'))
 
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
         labels = {
-            'username': 'Foydalanuvchi nomi',
+            'username': _('Username'),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['password1'].label = _('Password')
+        self.fields['password2'].label = _('Password confirmation')
 
     def save(self, commit=True, role='worker'):
         user = super().save(commit=False)
@@ -39,18 +46,18 @@ class RegisterForm(UserCreationForm):
 
 
 class ProfileEditForm(forms.ModelForm):
-    first_name = forms.CharField(max_length=50, required=True, label="Ismi")
-    last_name = forms.CharField(max_length=50, required=True, label="Familiyasi")
-    email = forms.EmailField(required=False, label="Email")
+    first_name = forms.CharField(max_length=50, required=True, label=_('First name'))
+    last_name = forms.CharField(max_length=50, required=True, label=_('Last name'))
+    email = forms.EmailField(required=False, label=_('Email'))
 
     class Meta:
         model = UserProfile
         fields = ['avatar', 'region', 'bio', 'phone']
         labels = {
-            'avatar': 'Profil rasmi',
-            'region': 'Viloyat',
-            'bio': 'O\'zingiz haqingizda',
-            'phone': 'Telefon raqam',
+            'avatar': _('Profile photo'),
+            'region': _('Region'),
+            'bio': _('About you'),
+            'phone': _('Phone'),
         }
 
     def __init__(self, *args, **kwargs):

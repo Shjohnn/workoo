@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans 'Ratings' %} — {{ worker.get_full_name|default:worker.username }} — Workooo{% endblock %}
+{% block content %}
+<div class="container form-page">
+    <div class="form-card">
+        <h2>⭐ {% trans 'Ratings for' %} {{ worker.get_full_name|default:worker.username }}</h2>
+        {% if avg %}
+        <p class="text-muted" style="margin-bottom:1.5rem;">
+            {% trans 'Average:' %} <strong>{{ avg }}</strong> / 5
+        </p>
+        {% endif %}
+        {% if ratings %}
+        <div class="jobs-list">
+            {% for r in ratings %}
+            <div class="review-card" style="padding:1rem 0;border-bottom:1px solid var(--border);">
+                <div class="review-stars">
+                    {% for i in "12345" %}
+                        {% if forloop.counter <= r.score %}⭐{% else %}☆{% endif %}
+                    {% endfor %}
+                </div>
+                <a href="{% url 'job_detail' r.job.pk %}" class="review-job">{{ r.job.title }}</a>
+                <p class="text-muted" style="font-size:.85rem;">{{ r.created_at|date:"d.m.Y" }}</p>
+                {% if r.comment %}<p>{{ r.comment }}</p>{% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-muted">{% trans 'No ratings yet.' %}</p>
+        {% endif %}
+        <p style="margin-top:1.5rem;"><a href="{% url 'profile' worker.pk %}" class="btn btn-outline">← {% trans 'Back to profile' %}</a></p>
+    </div>
+</div>
+{% endblock %}

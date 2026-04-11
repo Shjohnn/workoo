@@ -1,18 +1,19 @@
 {% extends 'base.html' %}
-{% block title %}E'lonni o'chirish — IshTop{% endblock %}
+{% load i18n %}
+{% block title %}{% trans 'Delete listing' %} — Workooo{% endblock %}
 {% block content %}
 <div class="container form-page">
     <div class="form-card text-center">
-        <div class="empty-icon">🗑️</div>
-        <h2>E'lonni o'chirish</h2>
-        <p><strong>"{{ job.title }}"</strong> e'lonini o'chirmoqchimisiz?</p>
-        <p class="text-muted">Bu amalni qaytarib bo'lmaydi.</p>
+        <div class="empty-icon" aria-hidden="true">🗑️</div>
+        <h2>{% trans 'Delete listing' %}</h2>
+        <p><strong>«{{ job.title }}»</strong> — {% trans 'Delete this listing?' %}</p>
+        <p class="text-muted">{% trans 'This action cannot be undone.' %}</p>
         <div class="form-actions" style="justify-content:center">
             <form method="post">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-danger btn-lg">Ha, o'chirish</button>
+                <button type="submit" class="btn btn-danger btn-lg">{% trans 'Yes, delete' %}</button>
             </form>
-            <a href="{% url 'job_detail' job.pk %}" class="btn btn-ghost btn-lg">Bekor qilish</a>
+            <a href="{% url 'job_detail' job.pk %}" class="btn btn-ghost btn-lg">{% trans 'Cancel' %}</a>
         </div>
     </div>
 </div>

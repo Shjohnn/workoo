@@ -1,37 +1,38 @@
 {% extends 'base.html' %}
-{% block title %}Barcha ishlar — IshTop{% endblock %}
+{% load i18n %}
+{% block title %}{% trans 'All jobs' %} — Workooo{% endblock %}
 {% block content %}
 <div class="container page-layout">
     <div class="filter-sidebar">
         <div class="filter-card">
-            <h3>🔍 Qidirish va filter</h3>
+            <h3>🔍 {% trans 'Search and filters' %}</h3>
             <form method="get" id="filterForm">
                 <div class="form-group">
-                    <label>Kalit so'z</label>
-                    <input type="text" name="q" value="{{ q }}" placeholder="Ish nomi yoki manzil..."
+                    <label for="filter-q">{% trans 'Keywords' %}</label>
+                    <input type="text" name="q" id="filter-q" value="{{ q }}" placeholder="{% trans 'Job title or address…' %}"
                         class="form-control">
                 </div>
                 <div class="form-group">
-                    <label>Viloyat</label>
-                    <select name="region" class="form-control" onchange="this.form.submit()">
-                        <option value="">Barcha viloyatlar</option>
+                    <label for="filter-region">{% trans 'Region' %}</label>
+                    <select name="region" id="filter-region" class="form-control" onchange="this.form.submit()">
+                        <option value="">{% trans 'All regions' %}</option>
                         {% for key, val in regions %}
                         <option value="{{ key }}" {% if selected_region == key %}selected{% endif %}>{{ val }}</option>
                         {% endfor %}
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Kategoriya</label>
-                    <select name="category" class="form-control" onchange="this.form.submit()">
-                        <option value="">Barcha kategoriyalar</option>
+                    <label for="filter-cat">{% trans 'Category' %}</label>
+                    <select name="category" id="filter-cat" class="form-control" onchange="this.form.submit()">
+                        <option value="">{% trans 'All categories' %}</option>
                         {% for key, val in categories %}
                         <option value="{{ key }}" {% if selected_category == key %}selected{% endif %}>{{ val }}</option>
                         {% endfor %}
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">Qidirish</button>
+                <button type="submit" class="btn btn-primary btn-block">{% trans 'Search' %}</button>
                 {% if selected_region or selected_category or q %}
-                <a href="{% url 'job_list' %}" class="btn btn-ghost btn-block">Tozalash</a>
+                <a href="{% url 'job_list' %}" class="btn btn-ghost btn-block">{% trans 'Clear' %}</a>
                 {% endif %}
             </form>
         </div>
@@ -41,9 +42,9 @@
         <div class="jobs-header">
             <h2>
                 {% if q or selected_region or selected_category %}
-                Qidiruv natijalari
+                {% trans 'Search results' %}
                 {% else %}
-                Barcha e'lonlar
+                {% trans 'All listings' %}
                 {% endif %}
                 <span class="count-badge">{{ jobs.count }}</span>
             </h2>
@@ -65,13 +66,13 @@
                 <div class="job-list-body">
                     <div class="job-list-top">
                         <span class="job-badge">{{ job.get_category_display }}</span>
-                        <span class="job-time">{{ job.created_at|timesince }} oldin</span>
+                        <span class="job-time">{{ job.created_at|timesince }} {% trans 'ago' %}</span>
                     </div>
                     <h3>{{ job.title }}</h3>
                     <p class="job-desc-preview">{{ job.description|truncatewords:20 }}</p>
                     <div class="job-list-meta">
                         <span>📍 {{ job.address }}</span>
-                        <span>👥 {{ job.workers_needed }} ishchi</span>
+                        <span>👥 {{ job.workers_needed }} {% trans 'workers' %}</span>
                         {% if job.work_date %}
                         <span>📅 {{ job.work_date }}</span>
                         {% endif %}
@@ -85,10 +86,10 @@
         </div>
         {% else %}
         <div class="empty-state">
-            <div class="empty-icon">🔍</div>
-            <h3>Ishlar topilmadi</h3>
-            <p>Filter sozlamalarini o'zgartiring</p>
-            <a href="{% url 'job_list' %}" class="btn btn-outline">Barcha ishlarni ko'rish</a>
+            <div class="empty-icon" aria-hidden="true">🔍</div>
+            <h3>{% trans 'No jobs found' %}</h3>
+            <p>{% trans 'Try changing your filters.' %}</p>
+            <a href="{% url 'job_list' %}" class="btn btn-outline">{% trans 'Show all jobs' %}</a>
         </div>
         {% endif %}
     </div>

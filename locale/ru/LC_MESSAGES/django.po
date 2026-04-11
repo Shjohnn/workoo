@@ -1,0 +1,755 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Workooo 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-12 12:00+0000\n"
+"PO-Revision-Date: 2026-04-12 12:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgid "Workooo — daily and short-term jobs in Uzbekistan."
+msgstr "Workooo — ежедневные и краткосрочные вакансии в Узбекистане."
+
+msgid "Workooo — Find a job!"
+msgstr "Workooo — Найдите работу!"
+
+msgid "Switch to dark mode"
+msgstr "Переключить на тёмную тему"
+
+msgid "Switch to light mode"
+msgstr "Переключить на светлую тему"
+
+msgid "Dark mode"
+msgstr "Тёмная тема"
+
+msgid "Light mode"
+msgstr "Светлая тема"
+
+msgid "Main navigation"
+msgstr "Основная навигация"
+
+msgid "Menu"
+msgstr "Меню"
+
+msgid "Jobs"
+msgstr "Вакансии"
+
+msgid "+ Post a job"
+msgstr "+ Разместить вакансию"
+
+msgid "My jobs"
+msgstr "Мои объявления"
+
+msgid "My applications"
+msgstr "Мои отклики"
+
+msgid "Chats"
+msgstr "Чаты"
+
+msgid "My profile"
+msgstr "Мой профиль"
+
+msgid "Edit"
+msgstr "Редактировать"
+
+msgid "Log out"
+msgstr "Выйти"
+
+msgid "Log in"
+msgstr "Войти"
+
+msgid "Sign up"
+msgstr "Регистрация"
+
+msgid "Theme"
+msgstr "Тема"
+
+msgid "Language"
+msgstr "Язык"
+
+msgid "Close notification"
+msgstr "Закрыть уведомление"
+
+msgid "Daily job market in Uzbekistan"
+msgstr "Рынок ежедневной работы в Узбекистане"
+
+msgid "Pages"
+msgstr "Страницы"
+
+msgid "All jobs"
+msgstr "Все вакансии"
+
+msgid "Post a job"
+msgstr "Разместить вакансию"
+
+msgid "Account"
+msgstr "Аккаунт"
+
+msgid "© 2026 Workooo. All rights reserved."
+msgstr "© 2026 Workooo. Все права защищены."
+
+msgid "Home"
+msgstr "Главная"
+
+msgid "In Uzbekistan"
+msgstr "В Узбекистане"
+
+msgid "find a job"
+msgstr "найдите работу"
+
+msgid "or"
+msgstr "или"
+
+msgid "hire workers"
+msgstr "наймите работников"
+
+msgid ""
+"Find daily and short-term jobs in your region. Fast, easy, and reliable."
+msgstr ""
+"Найдите ежедневную и краткосрочную работу в вашем регионе. Быстро, просто и "
+"надёжно."
+
+msgid "Browse jobs"
+msgstr "Смотреть вакансии"
+
+msgid "12 regions"
+msgstr "12 регионов"
+
+msgid "Quick application"
+msgstr "Быстрый отклик"
+
+msgid "Rating system"
+msgstr "Система рейтингов"
+
+msgid "Search jobs"
+msgstr "Поиск вакансий"
+
+msgid "Job title, keywords…"
+msgstr "Название, ключевые слова…"
+
+msgid "Search"
+msgstr "Поиск"
+
+msgid "Construction"
+msgstr "Строительство"
+
+msgid "Moving"
+msgstr "Переезды"
+
+msgid "Cleaning"
+msgstr "Уборка"
+
+msgid "Agriculture"
+msgstr "Сельское хозяйство"
+
+msgid "Retail"
+msgstr "Торговля"
+
+msgid "Education"
+msgstr "Образование"
+
+msgid "Cafe"
+msgstr "Кафе"
+
+msgid "IT"
+msgstr "IT"
+
+msgid "Latest listings"
+msgstr "Новые объявления"
+
+msgid "See all"
+msgstr "Смотреть все"
+
+msgid "Address not specified"
+msgstr "Адрес не указан"
+
+msgid "ago"
+msgstr "назад"
+
+msgid "No jobs yet"
+msgstr "Пока нет вакансий"
+
+msgid "Check back soon or post the first listing."
+msgstr "Загляните позже или разместите первое объявление."
+
+msgid "Post the first job"
+msgstr "Разместить первую вакансию"
+
+msgid "How it works"
+msgstr "Как это работает"
+
+msgid "Four simple steps"
+msgstr "Четыре простых шага"
+
+msgid "1. Sign up"
+msgstr "1. Регистрация"
+
+msgid "Register quickly as a worker or employer."
+msgstr "Быстро зарегистрируйтесь как работодатель или работник."
+
+msgid "2. Find a job"
+msgstr "2. Найдите работу"
+
+msgid "Browse jobs in your region and use filters."
+msgstr "Смотрите вакансии в регионе и фильтры."
+
+msgid "3. Chat"
+msgstr "3. Чат"
+
+msgid "Apply — when accepted, chat opens."
+msgstr "Откликнитесь — после принятия откроется чат."
+
+msgid "4. Rate"
+msgstr "4. Оценка"
+
+msgid "After the job, leave a rating — trust grows."
+msgstr "После работы оставьте оценку — растёт доверие."
+
+msgid "Sign in"
+msgstr "Вход"
+
+msgid "Username"
+msgstr "Имя пользователя"
+
+msgid "Password"
+msgstr "Пароль"
+
+msgid "No account?"
+msgstr "Нет аккаунта?"
+
+msgid "I am a worker"
+msgstr "Я исполнитель"
+
+msgid "I am looking for work"
+msgstr "Ищу работу"
+
+msgid "I am an employer"
+msgstr "Я работодатель"
+
+msgid "I want to hire"
+msgstr "Хочу нанять"
+
+msgid "Already have an account?"
+msgstr "Уже есть аккаунт?"
+
+msgid "Search and filters"
+msgstr "Поиск и фильтры"
+
+msgid "Keywords"
+msgstr "Ключевые слова"
+
+msgid "Job title or address…"
+msgstr "Название или адрес…"
+
+msgid "All regions"
+msgstr "Все регионы"
+
+msgid "All categories"
+msgstr "Все категории"
+
+msgid "Clear"
+msgstr "Сбросить"
+
+msgid "Search results"
+msgstr "Результаты поиска"
+
+msgid "All listings"
+msgstr "Все объявления"
+
+msgid "workers"
+msgstr "работников"
+
+msgid "No jobs found"
+msgstr "Вакансии не найдены"
+
+msgid "Try changing your filters."
+msgstr "Измените фильтры."
+
+msgid "Show all jobs"
+msgstr "Показать все вакансии"
+
+msgid "About the job"
+msgstr "О работе"
+
+msgid "Location"
+msgstr "Местоположение"
+
+msgid "Loading…"
+msgstr "Загрузка…"
+
+msgid "Fullscreen"
+msgstr "Полный экран"
+
+msgid "My location"
+msgstr "Моё местоположение"
+
+msgid "Directions"
+msgstr "Маршрут"
+
+msgid "Applications"
+msgstr "Отклики"
+
+msgid "Accept"
+msgstr "Принять"
+
+msgid "Reject"
+msgstr "Отклонить"
+
+msgid "Rate"
+msgstr "Оценить"
+
+msgid "Employer"
+msgstr "Работодатель"
+
+msgid "Open chat"
+msgstr "Открыть чат"
+
+msgid "More jobs"
+msgstr "Ещё вакансии"
+
+msgid "Apply"
+msgstr "Откликнуться"
+
+msgid "Delete"
+msgstr "Удалить"
+
+msgid "Address not found"
+msgstr "Адрес не найден"
+
+msgid "You are here"
+msgstr "Вы здесь"
+
+msgid "Edit listing"
+msgstr "Редактировать объявление"
+
+msgid "Post a new job"
+msgstr "Новая вакансия"
+
+msgid "Basic information"
+msgstr "Основная информация"
+
+msgid "Payment and schedule"
+msgstr "Оплата и сроки"
+
+msgid "Click to enlarge"
+msgstr "Нажмите для увеличения"
+
+msgid "Click the map to set location or use GPS."
+msgstr "Нажмите на карту или используйте GPS."
+
+msgid "Extras"
+msgstr "Дополнительно"
+
+msgid "Save"
+msgstr "Сохранить"
+
+msgid "Publish"
+msgstr "Опубликовать"
+
+msgid "Cancel"
+msgstr "Отмена"
+
+msgid "Back"
+msgstr "Назад"
+
+msgid "Choose location"
+msgstr "Выберите место"
+
+msgid "Confirm"
+msgstr "Подтвердить"
+
+msgid "Tap the map or drag the marker"
+msgstr "Нажмите на карту или перетащите метку"
+
+msgid "Pick a location on the map"
+msgstr "Выберите точку на карте"
+
+msgid "Geolocation is not supported"
+msgstr "Геолокация не поддерживается"
+
+msgid "Locating…"
+msgstr "Определение…"
+
+msgid "Could not get location. Check browser permissions."
+msgstr "Не удалось получить местоположение. Проверьте разрешения."
+
+msgid "My listings"
+msgstr "Мои объявления"
+
+msgid "+ New listing"
+msgstr "+ Новое объявление"
+
+msgid "applications"
+msgstr "откликов"
+
+msgid "accepted"
+msgstr "принято"
+
+msgid "View"
+msgstr "Просмотр"
+
+msgid "Mark this job as completed?"
+msgstr "Отметить работу завершённой?"
+
+msgid "Complete"
+msgstr "Завершить"
+
+msgid "Delete this listing?"
+msgstr "Удалить объявление?"
+
+msgid "No listings yet"
+msgstr "Пока нет объявлений"
+
+msgid "Post your first job!"
+msgstr "Разместите первую вакансию!"
+
+msgid "No applications yet"
+msgstr "Пока нет откликов"
+
+msgid "Delete listing"
+msgstr "Удалить объявление"
+
+msgid "This action cannot be undone."
+msgstr "Это действие нельзя отменить."
+
+msgid "Yes, delete"
+msgstr "Да, удалить"
+
+msgid "reviews"
+msgstr "отзывов"
+
+msgid "Posted jobs"
+msgstr "Размещённые вакансии"
+
+msgid "Application history"
+msgstr "История откликов"
+
+msgid "Ratings and reviews"
+msgstr "Оценки и отзывы"
+
+msgid "Edit profile"
+msgstr "Редактировать профиль"
+
+msgid "Current photo"
+msgstr "Текущее фото"
+
+msgid "Chat"
+msgstr "Чат"
+
+msgid "No messages yet. Say hello!"
+msgstr "Пока нет сообщений. Напишите первым!"
+
+msgid "Message"
+msgstr "Сообщение"
+
+msgid "Type a message…"
+msgstr "Введите сообщение…"
+
+msgid "Send"
+msgstr "Отправить"
+
+msgid "No chats yet"
+msgstr "Пока нет чатов"
+
+msgid "Unread messages"
+msgstr "Непрочитанные сообщения"
+
+msgid "Unread"
+msgstr "Непрочитано"
+
+msgid "Apply to a job — when accepted, a chat will open."
+msgstr "Откликнитесь на вакансию — после принятия откроется чат."
+
+msgid "Rate worker"
+msgstr "Оценить исполнителя"
+
+msgid "Job:"
+msgstr "Вакансия:"
+
+msgid "Rating (1 to 5)"
+msgstr "Оценка (от 1 до 5)"
+
+msgid "Stars"
+msgstr "Звёзды"
+
+msgid "Comment (optional)"
+msgstr "Комментарий (необязательно)"
+
+msgid "Your feedback about the work…"
+msgstr "Ваш отзыв о работе…"
+
+msgid "Submit rating"
+msgstr "Отправить оценку"
+
+msgid "Ratings"
+msgstr "Оценки"
+
+msgid "Ratings for"
+msgstr "Оценки для"
+
+msgid "Average:"
+msgstr "Средняя оценка:"
+
+msgid "No ratings yet."
+msgstr "Пока нет оценок."
+
+msgid "Back to profile"
+msgstr "К профилю"
+
+msgid "Only employers can post jobs."
+msgstr "Только работодатели могут публиковать вакансии."
+
+msgid "Your job listing was published successfully!"
+msgstr "Вакансия успешно опубликована!"
+
+msgid "The job listing was updated!"
+msgstr "Объявление обновлено!"
+
+msgid "The job listing was deleted."
+msgstr "Объявление удалено."
+
+msgid "Only workers can apply."
+msgstr "Откликаться могут только исполнители."
+
+msgid "You cannot apply to your own listing."
+msgstr "Нельзя откликнуться на своё объявление."
+
+msgid "You have already applied to this job."
+msgstr "Вы уже откликнулись на эту вакансию."
+
+msgid "Your application was sent! Wait for the employer to respond."
+msgstr "Отклик отправлен! Дождитесь ответа работодателя."
+
+msgid "Permission denied."
+msgstr "Доступ запрещён."
+
+msgid "%(name)s was accepted. Chat is now open!"
+msgstr "%(name)s принят. Чат открыт!"
+
+msgid "Application was rejected."
+msgstr "Отклонено."
+
+msgid "The job was marked as completed."
+msgstr "Работа отмечена как завершённая."
+
+msgid "Only the employer can leave a rating."
+msgstr "Оценку может оставить только работодатель."
+
+msgid "You have already rated this worker for this job."
+msgstr "Вы уже оценили этого исполнителя."
+
+msgid "This worker was not accepted for this job."
+msgstr "Исполнитель не был принят на эту работу."
+
+msgid "%(name)s was rated!"
+msgstr "%(name)s оценён!"
+
+msgid "Invalid rating."
+msgstr "Некорректная оценка."
+
+msgid "Invalid request."
+msgstr "Неверный запрос"
+
+msgid "Invalid JSON."
+msgstr "Некорректный JSON"
+
+msgid "Welcome, %(name)s! Your account was created successfully."
+msgstr "Добро пожаловать, %(name)s! Аккаунт успешно создан."
+
+msgid "Incorrect username or password."
+msgstr "Неверное имя пользователя или пароль."
+
+msgid "Profile updated successfully!"
+msgstr "Профиль успешно обновлён!"
+
+msgid "— Select region —"
+msgstr "— Выберите регион —"
+
+msgid "Email (optional)"
+msgstr "Email (необязательно)"
+
+msgid "Phone (optional)"
+msgstr "Телефон (необязательно)"
+
+msgid "Password confirmation"
+msgstr "Подтверждение пароля"
+
+msgid "Job title"
+msgstr "Название"
+
+msgid "Job description"
+msgstr "Описание"
+
+msgid "Category"
+msgstr "Категория"
+
+msgid "Payment amount (UZS)"
+msgstr "Сумма оплаты (UZS)"
+
+msgid "Payment type"
+msgstr "Тип оплаты"
+
+msgid "Region"
+msgstr "Регион"
+
+msgid "Address"
+msgstr "Адрес"
+
+msgid "Image (optional)"
+msgstr "Изображение (необязательно)"
+
+msgid "Workers needed"
+msgstr "Сколько человек"
+
+msgid "Work date"
+msgstr "Дата работы"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "Additional message (optional)"
+msgstr "Дополнительное сообщение"
+
+msgid "Briefly describe yourself..."
+msgstr "Кратко о себе..."
+
+msgid "First name"
+msgstr "Имя"
+
+msgid "Last name"
+msgstr "Фамилия"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Profile photo"
+msgstr "Фото профиля"
+
+msgid "About you"
+msgstr "О себе"
+
+msgid "Phone"
+msgstr "Телефон"
+
+msgid "Rating from 1 to 5"
+msgstr "Оценка от 1 до 5"
+
+msgid "Construction and repair"
+msgstr "Строительство и ремонт"
+
+msgid "Moving and delivery"
+msgstr "Переезды и доставка"
+
+msgid "Cleaning service"
+msgstr "Уборка"
+
+msgid "Retail and services"
+msgstr "Торговля и услуги"
+
+msgid "IT and computers"
+msgstr "IT и компьютеры"
+
+msgid "Education and tutoring"
+msgstr "Обучение и репетиторство"
+
+msgid "Healthcare"
+msgstr "Здравоохранение"
+
+msgid "Cafe and restaurant"
+msgstr "Кафе и ресторан"
+
+msgid "Other"
+msgstr "Другое"
+
+msgid "Open"
+msgstr "Открыта"
+
+msgid "Closed"
+msgstr "Закрыта"
+
+msgid "Completed"
+msgstr "Завершена"
+
+msgid "Pending"
+msgstr "Ожидает"
+
+msgid "Accepted"
+msgstr "Принят"
+
+msgid "Rejected"
+msgstr "Отклонён"
+
+msgid "In UZS"
+msgstr "В сумах"
+
+msgid "Daily"
+msgstr "За день"
+
+msgid "Hourly"
+msgstr "Почасовая"
+
+msgid "Project"
+msgstr "Проект"
+
+msgid "Optional message"
+msgstr "Дополнительное сообщение"
+
+msgid "%(amount)s UZS / %(period)s"
+msgstr "%(amount)s сум / %(period)s"
+
+msgid "Worker"
+msgstr "Исполнитель"
+
+msgid "Light"
+msgstr "Светлая"
+
+msgid "Dark"
+msgstr "Тёмная"
+
+msgid "Tashkent city"
+msgstr "г. Ташкент"
+
+msgid "Tashkent region"
+msgstr "Ташкентская область"
+
+msgid "Andijan region"
+msgstr "Андижанская область"
+
+msgid "Fergana region"
+msgstr "Ферганская область"
+
+msgid "Namangan region"
+msgstr "Наманганская область"
+
+msgid "Samarkand region"
+msgstr "Самаркандская область"
+
+msgid "Bukhara region"
+msgstr "Бухарская область"
+
+msgid "Kashkadarya region"
+msgstr "Кашкадарьинская область"
+
+msgid "Surkhandarya region"
+msgstr "Сурхандарьинская область"
+
+msgid "Jizzakh region"
+msgstr "Джизакская область"
+
+msgid "Syrdarya region"
+msgstr "Сырдарьинская область"
+
+msgid "Navoi region"
+msgstr "Навоийская область"
+
+msgid "Khorezm region"
+msgstr "Хорезмская область"
+
+msgid "Republic of Karakalpakstan"
+msgstr "Республика Каракалпакстан"
