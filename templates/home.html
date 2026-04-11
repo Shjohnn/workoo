@@ -5,8 +5,7 @@
 <section class="hero">
     <div class="hero-inner">
         <div class="hero-text">
-            <h1>O'zbekistonda <span class="hero-highlight">ish toping</span> yoki <span class="hero-highlight">ishchi
-                    yollang</span></h1>
+            <h1>O'zbekistonda <span class="hero-highlight">ish toping</span> yoki <span class="hero-highlight">ishchi yollang</span></h1>
             <p>Viloyatingizdagi kunlik va qisqa muddatli ishlarni toping. Tez, oson va ishonchli.</p>
             <div class="hero-actions">
                 <a href="{% url 'job_list' %}" class="btn btn-primary btn-lg">Ishlarni ko'rish →</a>
@@ -15,7 +14,7 @@
                 {% endif %}
             </div>
         </div>
-        <div class="hero-stats">
+        <div class="hero-stats stagger">
             <div class="stat-card">
                 <span class="stat-num">🏙️</span>
                 <span class="stat-label">14 viloyat</span>
@@ -34,8 +33,17 @@
 
 <section class="section">
     <div class="container">
+
+        <!-- Search -->
+        <div class="reveal">
+            <form method="get" action="{% url 'job_list' %}" class="search-bar">
+                <input type="text" name="q" placeholder="🔍  Ish nomi, kalit so'z..." autocomplete="off">
+                <button type="submit" class="btn btn-primary">Qidirish</button>
+            </form>
+        </div>
+
         <!-- Category pills -->
-        <div class="category-pills">
+        <div class="category-pills reveal">
             <a href="{% url 'job_list' %}?category=qurilish" class="pill">🔨 Qurilish</a>
             <a href="{% url 'job_list' %}?category=yuk_tashish" class="pill">🚚 Yuk tashish</a>
             <a href="{% url 'job_list' %}?category=tozalash" class="pill">🧹 Tozalash</a>
@@ -46,13 +54,13 @@
             <a href="{% url 'job_list' %}?category=it" class="pill">💻 IT</a>
         </div>
 
-        <div class="section-header">
+        <div class="section-header reveal">
             <h2>Yangi e'lonlar</h2>
             <a href="{% url 'job_list' %}" class="see-all">Barchasini ko'rish →</a>
         </div>
 
         {% if jobs %}
-        <div class="jobs-grid">
+        <div class="jobs-grid stagger">
             {% for job in jobs %}
             <a href="{% url 'job_detail' job.pk %}" class="job-card">
                 {% if job.image %}
@@ -63,7 +71,7 @@
                 <div class="job-card-body">
                     <span class="job-badge">{{ job.get_category_display }}</span>
                     <h3 class="job-card-title">{{ job.title }}</h3>
-                    <p class="job-card-location">📍 {{ job.address }}</p>
+                    <p class="job-card-location">📍 {{ job.address|default:"Manzil ko'rsatilmagan" }}</p>
                     <div class="job-card-footer">
                         <span class="job-salary">{{ job.get_salary_display_text }}</span>
                         <span class="job-time">{{ job.created_at|timesince }} oldin</span>
@@ -73,39 +81,42 @@
             {% endfor %}
         </div>
         {% else %}
-        <div class="empty-state">
-            <p>Hozircha ishlar yo'q.</p>
+        <div class="empty-state reveal">
+            <span class="empty-icon">💼</span>
+            <h3>Hozircha ishlar yo'q</h3>
+            <p>Birinchi e'lon bo'lishini kuting yoki o'zingiz joylashtiring</p>
             {% if user.is_authenticated and user.profile.role == 'employer' %}
-            <a href="{% url 'job_create' %}" class="btn btn-primary">Birinchi e'lonni joylashtiring</a>
+            <a href="{% url 'job_create' %}" class="btn btn-primary">+ Birinchi e'lonni joylashtiring</a>
             {% endif %}
         </div>
         {% endif %}
     </div>
 </section>
 
-<section class="how-it-works section">
+<section class="section" style="background:var(--bg-card);border-top:1px solid var(--border);">
     <div class="container">
-        <h2 class="text-center">Qanday ishlaydi?</h2>
-        <div class="steps-grid">
+        <h2 class="text-center reveal" style="margin-bottom:.5rem;">Qanday ishlaydi?</h2>
+        <p class="text-center text-muted reveal" style="margin-bottom:0;">4 ta oddiy qadam</p>
+        <div class="steps-grid stagger">
             <div class="step-card">
-                <div class="step-icon">📝</div>
+                <span class="step-icon">📝</span>
                 <h3>1. Ro'yxatdan o'ting</h3>
                 <p>Ishchi yoki ish beruvchi sifatida tez ro'yxatdan o'ting</p>
             </div>
             <div class="step-card">
-                <div class="step-icon">🔍</div>
+                <span class="step-icon">🔍</span>
                 <h3>2. Ish toping</h3>
                 <p>Viloyatingizdagi ishlarni ko'ring, filter qiling</p>
             </div>
             <div class="step-card">
-                <div class="step-icon">💬</div>
+                <span class="step-icon">💬</span>
                 <h3>3. Chat qiling</h3>
-                <p>Ariza yuboring, qabul qilinsa chat ochildi</p>
+                <p>Ariza yuboring, qabul qilinsa chat ochiladi</p>
             </div>
             <div class="step-card">
-                <div class="step-icon">⭐</div>
+                <span class="step-icon">⭐</span>
                 <h3>4. Baholang</h3>
-                <p>Ish tugagach baholash qoldiring — ishonch quriladi</p>
+                <p>Ish tugagach baho qoldiring — ishonch quriladi</p>
             </div>
         </div>
     </div>

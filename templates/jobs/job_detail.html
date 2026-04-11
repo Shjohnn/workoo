@@ -175,12 +175,33 @@
 {% block extra_js %}
 {% if job.lat and job.lng %}
 <script>
-    const jobMap = L.map('job-map').setView([{{ job.lat }}, {{ job.lng }}], 15);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap'
-    }).addTo(jobMap);
-    const marker = L.marker([{{ job.lat }}, {{ job.lng }}]).addTo(jobMap);
+(function() {
+    var mapEl = document.getElementById('job-map');
+    if (!mapEl) return;
+    var lat = {{ job.lat }};
+    var lng = {{ job.lng }};
+    var jobMap = L.map('job-map', {
+        attributionControl: false,
+        scrollWheelZoom: false,
+        zoomControl: true
+    }).setView([lat, lng], 15);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(jobMap);
+    var marker = L.marker([lat, lng]).addTo(jobMap);
     marker.bindPopup('<strong>{{ job.title|escapejs }}</strong><br>{{ job.address|escapejs }}').openPopup();
+    // Click to fullscreen
+    mapEl.style.cursor = 'zoom-in';
+    mapEl.addEventListener('click', function(e) {
+        if (e.target.closest('.leaflet-control')) return;
+        if (document.fullscreenElement) {
+            document.exitFullscreen();
+        } else {
+            mapEl.requestFullscreen().catch(function(){});
+        }
+    });
+    document.addEventListener('fullscreenchange', function() {
+        setTimeout(function() { jobMap.invalidateSize(); }, 200);
+    });
+})();
 </script>
 {% endif %}
-{% endblock %}
+{% endblock %}
