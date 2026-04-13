@@ -41,21 +41,60 @@
 {% endblock %}
 {% block extra_js %}
 <script>
-    const stars = document.querySelectorAll('.star-btn');
-    const scoreInput = document.getElementById('scoreInput');
-    const submitBtn = document.getElementById('submitRating');
-    stars.forEach((star, i) => {
-        star.addEventListener('click', () => {
-            scoreInput.value = i + 1;
-            submitBtn.disabled = false;
-            stars.forEach((s, j) => s.classList.toggle('active', j <= i));
+    document.addEventListener('DOMContentLoaded', function() {
+        const stars = document.querySelectorAll('.star-btn');
+        const scoreInput = document.getElementById('scoreInput');
+        const submitBtn = document.getElementById('submitRating');
+        let selectedRating = 0;
+
+        function updateStars(rating) {
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add('active');
+                    star.setAttribute('aria-pressed', 'true');
+                } else {
+                    star.classList.remove('active');
+                    star.setAttribute('aria-pressed', 'false');
+                }
+            });
+        }
+
+        function setHoverState(rating) {
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add('hover');
+                } else {
+                    star.classList.remove('hover');
+                }
+            });
+        }
+
+        stars.forEach((star, index) => {
+            // Click handler
+            star.addEventListener('click', function(e) {
+                e.preventDefault();
+                selectedRating = index + 1;
+                scoreInput.value = selectedRating;
+                updateStars(selectedRating);
+                submitBtn.disabled = false;
+            });
+
+            // Hover preview
+            star.addEventListener('mouseenter', function() {
+                setHoverState(index + 1);
+            });
+
+            // Return to selected state on mouse out
+            star.addEventListener('mouseleave', function() {
+                stars.forEach(s => s.classList.remove('hover'));
+            });
         });
-        star.addEventListener('mouseover', () => {
-            stars.forEach((s, j) => s.classList.toggle('hover', j <= i));
-        });
-        star.addEventListener('mouseout', () => {
+
+        // Also update when mouse leaves the entire rating container
+        document.getElementById('starRating').addEventListener('mouseleave', function() {
             stars.forEach(s => s.classList.remove('hover'));
         });
     });
 </script>
 {% endblock %}
+

@@ -458,11 +458,15 @@ h4{font-size:.92rem;font-weight:600}
   box-shadow:0 0 0 2px rgba(229,57,53,.2),0 2px 6px rgba(229,57,53,.45);
 }
 
-/* ---------- Ratings ---------- */
+/** ---------- Ratings ---------- **/
 .rate-worker-info{display:flex;align-items:center;gap:1rem;margin-bottom:1.65rem;padding:1.1rem;background:var(--bg-soft);border-radius:var(--r-sm);border:1px solid var(--border)}
 .star-rating{display:flex;gap:.5rem;margin:.55rem 0}
-.star-btn{background:none;border:none;font-size:2.2rem;cursor:pointer;color:var(--border);transition:all var(--t-bounce)}
-.star-btn:hover,.star-btn.hover,.star-btn.active{color:var(--warning);transform:scale(1.2)}
+.star-btn{background:none;border:none;font-size:2.2rem;cursor:pointer;color:var(--text-light);transition:all var(--t-bounce);padding:0;line-height:1}
+.star-btn:hover,.star-btn.hover{color:var(--warning);transform:scale(1.2)}
+.star-btn.active{color:var(--warning);transform:scale(1.2);pointer-events:auto}
+[data-theme="dark"] .star-btn{color:var(--text-light)}
+[data-theme="dark"] .star-btn:hover,[data-theme="dark"] .star-btn.hover{color:var(--warning);transform:scale(1.2)}
+[data-theme="dark"] .star-btn.active{color:var(--warning);transform:scale(1.2)}
 
 /* ---------- How It Works ---------- */
 .steps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.25rem;margin-top:1.85rem}
@@ -624,7 +628,21 @@ h4{font-size:.92rem;font-weight:600}
 [data-theme="dark"] .nav-badge{border-color:var(--bg-white)}
 [data-theme="dark"] .btn-register{background:var(--bg-elevated);color:var(--text)!important}
 [data-theme="dark"] .btn-register:hover{background:var(--bg-hover)}
-[data-theme="dark"] .form-control:focus{background:var(--bg-white)}
+[data-theme="dark"] .form-control,
+[data-theme="dark"] input[type="text"],
+[data-theme="dark"] input[type="password"],
+[data-theme="dark"] input[type="email"],
+[data-theme="dark"] input[type="date"],
+[data-theme="dark"] input[type="number"],
+[data-theme="dark"] select,
+[data-theme="dark"] textarea{background:#334155;color:var(--text);border-color:#475569}
+[data-theme="dark"] .form-control:hover,
+[data-theme="dark"] input:hover:not(:focus),
+[data-theme="dark"] select:hover:not(:focus){border-color:#64748b}
+[data-theme="dark"] .form-control:focus,
+[data-theme="dark"] input:focus,
+[data-theme="dark"] select:focus,
+[data-theme="dark"] textarea:focus{background:#475569;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-glow)}
 [data-theme="dark"] .auth-page{
   background:linear-gradient(160deg,var(--bg) 0%,var(--bg-soft) 100%);
 }
